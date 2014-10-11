@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 
 
+
 public class Patient {
 
 	@Id
@@ -122,20 +123,12 @@ public class Patient {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((isActive == null) ? 0 : isActive.hashCode());
 		result = prime * result + (int) (lastLogin ^ (lastLogin >>> 32));
-		result = prime * result + ((medLog == null) ? 0 : medLog.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((painLog == null) ? 0 : painLog.hashCode());
-		result = prime * result
-				+ ((physicians == null) ? 0 : physicians.hashCode());
-		result = prime * result
-				+ ((prescriptions == null) ? 0 : prescriptions.hashCode());
-		result = prime * result
-				+ ((statusLog == null) ? 0 : statusLog.hashCode());
 		return result;
 	}
 
@@ -143,7 +136,7 @@ public class Patient {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (!(obj instanceof Patient))
 			return false;
@@ -160,35 +153,10 @@ public class Patient {
 			return false;
 		if (lastLogin != other.lastLogin)
 			return false;
-		if (medLog == null) {
-			if (other.medLog != null)
-				return false;
-		} else if (!medLog.equals(other.medLog))
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (painLog == null) {
-			if (other.painLog != null)
-				return false;
-		} else if (!painLog.equals(other.painLog))
-			return false;
-		if (physicians == null) {
-			if (other.physicians != null)
-				return false;
-		} else if (!physicians.equals(other.physicians))
-			return false;
-		if (prescriptions == null) {
-			if (other.prescriptions != null)
-				return false;
-		} else if (!prescriptions.equals(other.prescriptions))
-			return false;
-		if (statusLog == null) {
-			if (other.statusLog != null)
-				return false;
-		} else if (!statusLog.equals(other.statusLog))
 			return false;
 		return true;
 	}

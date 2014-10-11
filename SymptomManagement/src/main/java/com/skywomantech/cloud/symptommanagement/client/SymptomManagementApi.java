@@ -43,7 +43,7 @@ public interface SymptomManagementApi {
 	public Patient getPatient(@Path(ID_PARAMETER) String userId);		
 	
 	@POST(PATIENT_PATH)
-	public boolean addPatient(@Body Patient patient);
+	public Patient addPatient(@Body Patient patient);
 	
 	@PUT(PATIENT_PATH+ID_PATH)
 	public Patient updatePatient(@Path(ID_PARAMETER) String userId,	@Body Patient patient);		
@@ -61,7 +61,7 @@ public interface SymptomManagementApi {
 	public Physician getPhysician(@Path(ID_PARAMETER) String userId);
 	
 	@POST(PHYSICIAN_PATH)
-	public boolean addPhysician(@Body Physician physician);
+	public Physician addPhysician(@Body Physician physician);
 	
 	@PUT(PHYSICIAN_PATH+ID_PATH)
 	public Physician updatePhysician(@Path(ID_PARAMETER) String userId, @Body Physician physician);	
@@ -79,7 +79,7 @@ public interface SymptomManagementApi {
 	public Medication getMedication(@Path(ID_PARAMETER) String medId);
 	
 	@POST(MEDICATION_PATH)
-	public boolean addMedication(@Body Medication medication);
+	public Medication addMedication(@Body Medication medication);
 	
 	@PUT(MEDICATION_PATH+ID_PATH)
 	public Medication updateMedication(@Path(ID_PARAMETER) String medId, @Body Medication medication);	

@@ -1,6 +1,7 @@
 package com.skywomantech.cloud.symptommanagement.integration.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -59,31 +60,23 @@ public class SymptomManagementClientApiTest {
 	@Test
 	public void testVideoAddAndList() throws Exception {
 		
-		try {
-		smController.addPatient(p);
-		} catch (Exception e) {
-			// do nothing
-		}
-		//assertTrue(ok);
+		Patient updatedPatient = smController.addPatient(p);
+		assertNotNull(updatedPatient);
 
-/*		Collection<Patient> patients = smController.getAllPatients();
-		//assertTrue(patients.contains(p));
-	*/	
-		try {
-		smController.addPhysician(dr);
-		} catch (Exception e) {
-			// do nothing
-		}
-		//assertTrue(ok);
+	    Collection<Patient> patients = smController.getAllPatients();
+		assertTrue(patients.contains(updatedPatient));
+
+
+		Physician dr2 = smController.addPhysician(dr);
+		assertNotNull(dr2);
 		
-		/*
 		Collection<Physician> drs = smController.getAllPhysicians();
-		//assertTrue(drs.contains(dr));
-*/		
-		 //smController.addMedication(med);
+		assertTrue(drs.contains(dr2));
+	
+		 Medication m2 = smController.addMedication(med);
 
-		 //smController.getAllMedications();
-		//assertTrue(meds.contains(med));		
+		 Collection<Medication> meds = smController.getAllMedications();
+		assertTrue(meds.contains(m2));		
 		
 	}
 

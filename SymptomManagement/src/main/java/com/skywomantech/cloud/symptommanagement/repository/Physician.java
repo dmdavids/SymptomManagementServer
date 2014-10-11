@@ -58,17 +58,15 @@ public class Physician {
 	}
 
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((patients == null) ? 0 : patients.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -89,14 +87,8 @@ public class Physician {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (patients == null) {
-			if (other.patients != null)
-				return false;
-		} else if (!patients.equals(other.patients))
-			return false;
 		return true;
 	}
-
 
 	@Override
 	public String toString() {
