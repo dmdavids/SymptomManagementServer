@@ -1,10 +1,19 @@
 package com.skywomantech.cloud.symptommanagement.repository;
 
+import java.math.BigInteger;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
 
-public class Patient extends User {
 
+public class Patient {
+
+	@Id
+	private BigInteger id;
+	private String name;
+	private long lastLogin;
+	private Boolean isActive;
+	
 	private Set<Medication> prescriptions;
 	private Set<Physician> physicians;
 	
@@ -16,21 +25,69 @@ public class Patient extends User {
 		super();
 	}
 	
-	public Patient(long id, String name, String password, long lastLogin) {
-		super(id, name, password, lastLogin);
+	public Patient( String name ){
+		super();
+		this.name = name;
+		this.isActive = true;
+		this.lastLogin = 0L;
 	}
 	
-	public Patient(long id, String name, String password, long lastLogin, 
-			Set<Medication> prescriptions, Set<Physician> physicians,
-			Set<PainLog> painLog, Set<MedicationLog> medLog,
-			Set<StatusLog> statusLog) {
-		super(id, name, password, lastLogin);
+	public Patient( String name, long lastLogin,
+			Boolean isActive, Set<Medication> prescriptions,
+			Set<Physician> physicians, Set<PainLog> painLog,
+			Set<MedicationLog> medLog, Set<StatusLog> statusLog) {
+		super();
+		this.name = name;
+		this.lastLogin = lastLogin;
+		this.isActive = isActive;
 		this.prescriptions = prescriptions;
 		this.physicians = physicians;
 		this.painLog = painLog;
 		this.medLog = medLog;
 		this.statusLog = statusLog;
 	}
+
+
+	public BigInteger getId() {
+		return id;
+	}
+
+
+	public void setId(BigInteger id) {
+		this.id = id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public long getLastLogin() {
+		return lastLogin;
+	}
+
+
+	public void setLastLogin(long lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+
 	public Set<Medication> getPrescriptions() {
 		return prescriptions;
 	}
@@ -66,7 +123,12 @@ public class Patient extends User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((isActive == null) ? 0 : isActive.hashCode());
+		result = prime * result + (int) (lastLogin ^ (lastLogin >>> 32));
 		result = prime * result + ((medLog == null) ? 0 : medLog.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((painLog == null) ? 0 : painLog.hashCode());
 		result = prime * result
 				+ ((physicians == null) ? 0 : physicians.hashCode());
@@ -86,10 +148,27 @@ public class Patient extends User {
 		if (!(obj instanceof Patient))
 			return false;
 		Patient other = (Patient) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (isActive == null) {
+			if (other.isActive != null)
+				return false;
+		} else if (!isActive.equals(other.isActive))
+			return false;
+		if (lastLogin != other.lastLogin)
+			return false;
 		if (medLog == null) {
 			if (other.medLog != null)
 				return false;
 		} else if (!medLog.equals(other.medLog))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
 			return false;
 		if (painLog == null) {
 			if (other.painLog != null)
@@ -116,11 +195,11 @@ public class Patient extends User {
 
 	@Override
 	public String toString() {
-		return "Patient [prescriptions=" + prescriptions + ", physicians="
-				+ physicians + ", painLog=" + painLog + ", medLog=" + medLog
-				+ ", statusLog=" + statusLog + ", toString()="
-				+ super.toString() + "]";
+		return "Patient [id=" + id + ", name=" + name + ", lastLogin="
+				+ lastLogin + ", isActive=" + isActive + ", prescriptions="
+				+ prescriptions + ", physicians=" + physicians + ", painLog="
+				+ painLog + ", medLog=" + medLog + ", statusLog=" + statusLog
+				+ "]";
 	}
-	
 	
 }

@@ -1,26 +1,56 @@
 package com.skywomantech.cloud.symptommanagement.repository;
 
-public class MedicationLog extends SymptomManagementLog {
+import java.math.BigInteger;
 
-	private long prescriptionId;
+import org.springframework.data.annotation.Id;
+
+public class MedicationLog {
+
+	@Id
+	private BigInteger id;
+	private long created;
+	private Medication med;
 	private long taken;
 
 	public MedicationLog() {
 		super();
 	}
 
-	public MedicationLog(long patientId, long prescriptionId, long taken) {
-		super(patientId);
-		this.prescriptionId = prescriptionId;
+	public MedicationLog(Medication med, long taken) {
+		this.med = med;
+		this.taken = taken;
+		this.created = 0L;
+	}
+
+	public MedicationLog(long created, Medication med, long taken) {
+		super();
+		this.created = created;
+		this.med = med;
 		this.taken = taken;
 	}
 
-	public long getPrescriptionId() {
-		return prescriptionId;
+	public BigInteger getId() {
+		return id;
 	}
 
-	public void setPrescriptionId(long prescriptionId) {
-		this.prescriptionId = prescriptionId;
+	public void setId(BigInteger id) {
+		this.id = id;
+	}
+
+	public long getCreated() {
+		return created;
+	}
+
+	public void setCreated(long created) {
+		this.created = created;
+	}
+
+	public Medication getMed() {
+		return med;
+	}
+
+	public void setMed(Medication med) {
+		this.med = med;
 	}
 
 	public long getTaken() {
@@ -34,8 +64,10 @@ public class MedicationLog extends SymptomManagementLog {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (int) (prescriptionId ^ (prescriptionId >>> 32));
+		int result = 1;
+		result = prime * result + (int) (created ^ (created >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((med == null) ? 0 : med.hashCode());
 		result = prime * result + (int) (taken ^ (taken >>> 32));
 		return result;
 	}
@@ -44,12 +76,22 @@ public class MedicationLog extends SymptomManagementLog {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (!(obj instanceof MedicationLog))
 			return false;
 		MedicationLog other = (MedicationLog) obj;
-		if (prescriptionId != other.prescriptionId)
+		if (created != other.created)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (med == null) {
+			if (other.med != null)
+				return false;
+		} else if (!med.equals(other.med))
 			return false;
 		if (taken != other.taken)
 			return false;
@@ -58,8 +100,8 @@ public class MedicationLog extends SymptomManagementLog {
 
 	@Override
 	public String toString() {
-		return "MedicationLog [prescriptionId=" + prescriptionId + ", taken="
-				+ taken + ", toString()=" + super.toString() + "]";
+		return "MedicationLog [id=" + id + ", created=" + created + ", med="
+				+ med + ", taken=" + taken + "]";
 	}
 
 }

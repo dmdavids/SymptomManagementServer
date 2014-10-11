@@ -73,7 +73,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  * @author jules
  *
  */
-@SuppressWarnings("serial")
 public class ResourcesMapper extends ObjectMapper {
 
 	// This anonymous inner class will handle conversion of the Spring Data Rest

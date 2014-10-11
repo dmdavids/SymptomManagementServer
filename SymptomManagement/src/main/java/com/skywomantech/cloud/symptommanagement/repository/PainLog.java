@@ -1,8 +1,15 @@
 package com.skywomantech.cloud.symptommanagement.repository;
 
+import java.math.BigInteger;
 
-public class PainLog extends SymptomManagementLog {
+import org.springframework.data.annotation.Id;
+
+
+public class PainLog {
 	
+	@Id
+	private BigInteger id;
+	private long created;
 	private int severity;
 	private int eating;
 
@@ -10,12 +17,36 @@ public class PainLog extends SymptomManagementLog {
 		super();
 	}
 	
-	public PainLog(int patientId, int severity, int eating) {
-		super(patientId);
+	public PainLog(int severity, int eating) {
+		this.severity = severity;
+		this.eating = eating;
+		this.created = 0L;
+	}
+	
+	
+	public PainLog(long created, int severity, int eating) {
+		super();
+		this.created = created;
 		this.severity = severity;
 		this.eating = eating;
 	}
-	
+
+	public BigInteger getId() {
+		return id;
+	}
+
+	public void setId(BigInteger id) {
+		this.id = id;
+	}
+
+	public long getCreated() {
+		return created;
+	}
+
+	public void setCreated(long created) {
+		this.created = created;
+	}
+
 	public int getSeverity() {
 		return severity;
 	}
@@ -32,8 +63,10 @@ public class PainLog extends SymptomManagementLog {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
+		result = prime * result + (int) (created ^ (created >>> 32));
 		result = prime * result + eating;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + severity;
 		return result;
 	}
@@ -42,12 +75,19 @@ public class PainLog extends SymptomManagementLog {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (!(obj instanceof PainLog))
 			return false;
 		PainLog other = (PainLog) obj;
+		if (created != other.created)
+			return false;
 		if (eating != other.eating)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (severity != other.severity)
 			return false;
@@ -56,8 +96,8 @@ public class PainLog extends SymptomManagementLog {
 
 	@Override
 	public String toString() {
-		return "PainLog [severity=" + severity + ", eating=" + eating
-				+ ", toString()=" + super.toString() + "]";
+		return "PainLog [id=" + id + ", created=" + created + ", severity="
+				+ severity + ", eating=" + eating + "]";
 	}
-	
+
 }

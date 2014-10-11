@@ -1,6 +1,8 @@
 package com.skywomantech.cloud.symptommanagement.testdata;
 
-import java.util.UUID;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
@@ -30,30 +32,26 @@ public class TestData {
 	 * @return
 	 */
 	public static Patient randomPatient() {
-		// Construct a random identifier using Java's UUID class
-		long id =  Long.parseLong(UUID.randomUUID().toString());
 		String name = "Donald Duck";
-		String password = "dummy";
-		return new Patient(id,name, password, 0L);
+		//Patient p = null;
+		return new Patient(name);
 	}
 	
 	
 	public static Physician randomPhysician() {
-		// Information about the video
-		// Construct a random identifier using Java's UUID class
-		long id =  Long.parseLong(UUID.randomUUID().toString());
 		String name = "Minnie Mouse";
-		String password = "mickey";
-		return new Physician(id, name, password, 0L);
+		String patientName = "Daisy";
+		Set<Patient> patients = new HashSet<Patient>();
+		patients.add(new Patient(patientName));
+		Physician p = new Physician(name, patients );
+		return p;
 	}
 	
 	
 	public static Medication randomMedication() {
-		// Information about the video
-		// Construct a random identifier using Java's UUID class
-		long id =  Long.parseLong(UUID.randomUUID().toString());
-		String name = "Bird Juice";
-		return new Medication(id, name);
+		String name = "Dancing Feet";
+		Medication m = new Medication(name);
+		return m;
 	}
 	
 	/**

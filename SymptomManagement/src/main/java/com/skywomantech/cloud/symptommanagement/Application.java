@@ -18,14 +18,10 @@ import com.skywomantech.cloud.symptommanagement.json.ResourcesMapper;
 @ComponentScan
 public class Application extends RepositoryRestMvcConfiguration {
 	
-	// Tell Spring to launch our app!
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 
-	/**
-	 * Like this formatter better
-	 */
 	@Override
 	public ObjectMapper halObjectMapper(){
 		return new ResourcesMapper();
