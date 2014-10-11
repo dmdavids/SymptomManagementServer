@@ -1,5 +1,6 @@
 package com.skywomantech.cloud.symptommanagement.controller;
 
+import java.math.BigInteger;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,46 +38,40 @@ public class SymptomManagementService implements SymptomManagementApi {
 	}
 
 	@RequestMapping(value=PATIENT_PATH+ID_PATH, method=RequestMethod.GET)
-	public @ResponseBody Patient getPatient(@RequestParam(ID_PARAMETER) String userId) {
-		// TODO Auto-generated method stub
-		return new Patient();
+	public @ResponseBody Patient getPatient(@RequestParam(ID_PARAMETER) long userId) {
+		return patients.findOne(userId);
 	}
 
 	@RequestMapping(value=PATIENT_PATH, method=RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
-		// TODO Auto-generated method stub
 		return patients.save(patient);
 	}
 
-
 	@RequestMapping(value=PATIENT_PATH+ID_PATH, method=RequestMethod.PUT)
-	public @ResponseBody Patient updatePatient(@RequestParam(ID_PARAMETER) String userId, 
+	public @ResponseBody Patient updatePatient(@RequestParam(ID_PARAMETER) long userId, 
 			@RequestBody Patient patient) {
-		// TODO Auto-generated method stub
-		return new Patient();
+		patient.setId(BigInteger.valueOf(userId));
+		return patients.save(patient);
 	}
 
 	@RequestMapping(value=PATIENT_PATH+ID_PATH, method=RequestMethod.DELETE)
-	public @ResponseBody void deletePatient(@RequestParam(ID_PARAMETER) String userId) {
-		// TODO Auto-generated method stub
+	public @ResponseBody void deletePatient(@RequestParam(ID_PARAMETER) long userId) {
+		patients.delete(userId);
 	}
 
 	@RequestMapping(value=PATIENT_SEARCH_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Patient> findByPatientName(@RequestParam(NAME_PARAMETER) String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return patients.findByName(name);
 	}
 
 	@RequestMapping(value=PHYSICIAN_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Physician> getAllPhysicians() {
-		// TODO Auto-generated method stub
 		return physicians.findAll();
 	}
 
 	@RequestMapping(value=PHYSICIAN_PATH+ID_PATH, method=RequestMethod.GET)
-	public @ResponseBody Physician getPhysician(@RequestParam(ID_PARAMETER) String userId) {
-		// TODO Auto-generated method stub
-		return new Physician();
+	public @ResponseBody Physician getPhysician(@RequestParam(ID_PARAMETER) long userId) {
+		return physicians.findOne(userId);
 	}
 
 	@RequestMapping(value=PHYSICIAN_PATH, method=RequestMethod.POST)
@@ -85,33 +80,30 @@ public class SymptomManagementService implements SymptomManagementApi {
 	}
 
 	@RequestMapping(value=PHYSICIAN_PATH+ID_PATH, method=RequestMethod.PUT)
-	public @ResponseBody Physician updatePhysician(@RequestParam(ID_PARAMETER) String userId, 
+	public @ResponseBody Physician updatePhysician(@RequestParam(ID_PARAMETER) long userId, 
 			@RequestBody Physician physician) {
-		// TODO Auto-generated method stub
-		return new Physician();
+		physician.setId(BigInteger.valueOf(userId));
+		return physicians.save(physician);
 	}
 
 	@RequestMapping(value=PHYSICIAN_PATH+ID_PATH, method=RequestMethod.DELETE)
-	public @ResponseBody void deletePhysician(@RequestParam(ID_PARAMETER) String userId) {
-		// TODO Auto-generated method stub
+	public @ResponseBody void deletePhysician(@RequestParam(ID_PARAMETER) long userId) {
+		physicians.delete(userId);
 	}
 
 	@RequestMapping(value=PHYSICIAN_SEARCH_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Physician> findByPhysicianName(@RequestParam(NAME_PARAMETER) String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return physicians.findByName(name);
 	}
 
 	@RequestMapping(value=MEDICATION_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Medication> getAllMedications() {
-		// TODO Auto-generated method stub
 		return medications.findAll();
 	}
 
 	@RequestMapping(value=MEDICATION_PATH+ID_PATH, method=RequestMethod.GET)
-	public @ResponseBody Medication getMedication(@RequestParam(ID_PARAMETER) String medId) {
-		// TODO Auto-generated method stub
-		return new Medication();
+	public @ResponseBody Medication getMedication(@RequestParam(ID_PARAMETER) long medId) {
+		return medications.findOne(medId);
 	}
 
 	@RequestMapping(value=MEDICATION_PATH, method=RequestMethod.POST)
@@ -120,20 +112,18 @@ public class SymptomManagementService implements SymptomManagementApi {
 	}
 
 	@RequestMapping(value=MEDICATION_PATH+ID_PATH, method=RequestMethod.PUT)
-	public @ResponseBody Medication updateMedication(String medId, @RequestBody Medication medication) {
-		// TODO Auto-generated method stub
-		return new Medication();
+	public @ResponseBody Medication updateMedication(long medId, @RequestBody Medication medication) {
+		medication.setId(BigInteger.valueOf(medId));
+		return medications.save(medication);
 	}
 
 	@RequestMapping(value=MEDICATION_PATH+ID_PATH, method=RequestMethod.DELETE)
-	public @ResponseBody void deleteMedication(@RequestParam(ID_PARAMETER) String medId) {
-		// TODO Auto-generated method stub
+	public @ResponseBody void deleteMedication(@RequestParam(ID_PARAMETER) long medId) {
+		medications.delete(medId);
 	}
 
 	@RequestMapping(value=MEDICATION_SEARCH_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Medication> findByMedicationName(@RequestParam(NAME_PARAMETER) String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return medications.findByName(name);
 	}
-
 }

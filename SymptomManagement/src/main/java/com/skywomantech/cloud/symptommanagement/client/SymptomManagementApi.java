@@ -40,16 +40,16 @@ public interface SymptomManagementApi {
 	public Collection<Patient> getAllPatients();
 	
 	@GET(PATIENT_PATH+ID_PATH)
-	public Patient getPatient(@Path(ID_PARAMETER) String userId);		
+	public Patient getPatient(@Path(ID_PARAMETER) long userId);		
 	
 	@POST(PATIENT_PATH)
 	public Patient addPatient(@Body Patient patient);
 	
 	@PUT(PATIENT_PATH+ID_PATH)
-	public Patient updatePatient(@Path(ID_PARAMETER) String userId,	@Body Patient patient);		
+	public Patient updatePatient(@Path(ID_PARAMETER) long userId, @Body Patient patient);		
 
 	@DELETE(PATIENT_PATH+ID_PATH)
-	public void deletePatient(@Path(ID_PARAMETER) String userId);		
+	public void deletePatient(@Path(ID_PARAMETER) long userId);		
 	
 	@GET(PATIENT_SEARCH_PATH)
 	public Collection<Patient> findByPatientName(@Query(NAME_PARAMETER) String name);
@@ -58,16 +58,16 @@ public interface SymptomManagementApi {
 	public Collection<Physician> getAllPhysicians();
 	
 	@GET(PHYSICIAN_PATH+ID_PATH)
-	public Physician getPhysician(@Path(ID_PARAMETER) String userId);
+	public Physician getPhysician(@Path(ID_PARAMETER) long userId);
 	
 	@POST(PHYSICIAN_PATH)
 	public Physician addPhysician(@Body Physician physician);
 	
 	@PUT(PHYSICIAN_PATH+ID_PATH)
-	public Physician updatePhysician(@Path(ID_PARAMETER) String userId, @Body Physician physician);	
+	public Physician updatePhysician(@Path(ID_PARAMETER) long userId, @Body Physician physician);	
 	
 	@DELETE(PHYSICIAN_PATH+ID_PATH)
-	public void deletePhysician(@Path(ID_PARAMETER) String userId);
+	public void deletePhysician(@Path(ID_PARAMETER) long userId);
 	
 	@GET(PHYSICIAN_SEARCH_PATH)
 	public Collection<Physician> findByPhysicianName(@Query(NAME_PARAMETER) String name);
@@ -76,16 +76,16 @@ public interface SymptomManagementApi {
 	public Collection<Medication> getAllMedications();
 	
 	@GET(MEDICATION_PATH+ID_PATH)
-	public Medication getMedication(@Path(ID_PARAMETER) String medId);
+	public Medication getMedication(@Path(ID_PARAMETER) long medId);
 	
 	@POST(MEDICATION_PATH)
 	public Medication addMedication(@Body Medication medication);
 	
 	@PUT(MEDICATION_PATH+ID_PATH)
-	public Medication updateMedication(@Path(ID_PARAMETER) String medId, @Body Medication medication);	
+	public Medication updateMedication(@Path(ID_PARAMETER) long medId, @Body Medication medication);	
 	
 	@DELETE(MEDICATION_PATH+ID_PATH)
-	public void deleteMedication(@Path(ID_PARAMETER) String medId);
+	public void deleteMedication(@Path(ID_PARAMETER) long medId);
 	
 	@GET(MEDICATION_SEARCH_PATH)
 	public Collection<Medication> findByMedicationName(@Query(NAME_PARAMETER) String name);
