@@ -38,7 +38,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 
 	@RequestMapping(value=PATIENT_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Patient> getAllPatients() {
-		LOG.info("Finding all patients");
+		LOG.debug("Finding all patients");
 		return patients.findAll();
 	}
 
@@ -49,7 +49,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 
 	@RequestMapping(value=PATIENT_PATH, method=RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
-		LOG.info("Adding this patient : " + patient);
+		LOG.debug("Adding this patient : " + patient);
 		return patients.save(patient);
 	}
 
@@ -57,7 +57,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 	public @ResponseBody Patient updatePatient(@RequestParam(ID_PARAMETER) long userId, 
 			@RequestBody Patient patient) {
 		patient.setId(BigInteger.valueOf(userId));
-		LOG.info("Updating this patient: " + patient);
+		LOG.debug("Updating this patient: " + patient);
 		return patients.save(patient);
 	}
 
@@ -116,7 +116,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 
 	@RequestMapping(value=MEDICATION_PATH, method=RequestMethod.POST)
 	public @ResponseBody Medication addMedication(@RequestBody Medication medication) {
-		LOG.info("Adding this medication : " + medication);
+		LOG.debug("Adding this medication : " + medication);
 		return medications.save(medication);
 	}
 
