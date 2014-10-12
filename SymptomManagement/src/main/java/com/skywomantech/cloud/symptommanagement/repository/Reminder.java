@@ -3,12 +3,17 @@ package com.skywomantech.cloud.symptommanagement.repository;
 import java.math.BigInteger;
 
 public class Reminder {
+	
 	BigInteger Id;
 	private int dayOfWeek;
 	private int hour;
 	private int minutes;
 	private String alarm;
 	private boolean isOn;
+	
+	public enum ReminderType { PAIN, MED, GENERIC };
+	private ReminderType reminderType; 
+
 	
 	public Reminder() {
 		super();
@@ -61,6 +66,14 @@ public class Reminder {
 		this.isOn = isOn;
 	}
 
+	public ReminderType getReminderType() {
+		return reminderType;
+	}
+
+	public void setReminderType(ReminderType reminderType) {
+		this.reminderType = reminderType;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,6 +84,8 @@ public class Reminder {
 		result = prime * result + hour;
 		result = prime * result + (isOn ? 1231 : 1237);
 		result = prime * result + minutes;
+		result = prime * result
+				+ ((reminderType == null) ? 0 : reminderType.hashCode());
 		return result;
 	}
 
@@ -101,6 +116,8 @@ public class Reminder {
 			return false;
 		if (minutes != other.minutes)
 			return false;
+		if (reminderType != other.reminderType)
+			return false;
 		return true;
 	}
 
@@ -108,7 +125,9 @@ public class Reminder {
 	public String toString() {
 		return "Reminder [Id=" + Id + ", dayOfWeek=" + dayOfWeek + ", hour="
 				+ hour + ", minutes=" + minutes + ", alarm=" + alarm
-				+ ", isOn=" + isOn + "]";
+				+ ", isOn=" + isOn + ", reminderType=" + reminderType + "]";
 	}
+
+
 	
 }
