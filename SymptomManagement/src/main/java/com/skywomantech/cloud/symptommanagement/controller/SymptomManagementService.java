@@ -3,6 +3,8 @@ package com.skywomantech.cloud.symptommanagement.controller;
 import java.math.BigInteger;
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +25,8 @@ import com.skywomantech.cloud.symptommanagement.repository.PhysicianRepository;
 @Controller
 public class SymptomManagementService implements SymptomManagementApi {
 
+	static final Logger LOG = LoggerFactory.getLogger(SymptomManagementService.class);
+	
 	@Autowired
 	private PatientRepository patients;
 	
@@ -34,6 +38,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 
 	@RequestMapping(value=PATIENT_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Patient> getAllPatients() {
+		LOG.info("Finding all patients");
 		return patients.findAll();
 	}
 
@@ -44,6 +49,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 
 	@RequestMapping(value=PATIENT_PATH, method=RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
+		LOG.info("Adding this patient : " + patient);
 		return patients.save(patient);
 	}
 
@@ -51,6 +57,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 	public @ResponseBody Patient updatePatient(@RequestParam(ID_PARAMETER) long userId, 
 			@RequestBody Patient patient) {
 		patient.setId(BigInteger.valueOf(userId));
+		LOG.info("Updating this patient: " + patient);
 		return patients.save(patient);
 	}
 
@@ -83,6 +90,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 	public @ResponseBody Physician updatePhysician(@RequestParam(ID_PARAMETER) long userId, 
 			@RequestBody Physician physician) {
 		physician.setId(BigInteger.valueOf(userId));
+		LOG.info("Updating this physician: " + physician);
 		return physicians.save(physician);
 	}
 
@@ -108,6 +116,7 @@ public class SymptomManagementService implements SymptomManagementApi {
 
 	@RequestMapping(value=MEDICATION_PATH, method=RequestMethod.POST)
 	public @ResponseBody Medication addMedication(@RequestBody Medication medication) {
+		LOG.info("Adding this medication : " + medication);
 		return medications.save(medication);
 	}
 

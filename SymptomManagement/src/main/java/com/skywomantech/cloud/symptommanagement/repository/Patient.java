@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 
-
-
 public class Patient {
 
 	@Id
@@ -22,6 +20,8 @@ public class Patient {
 	private Set<MedicationLog> medLog;
 	private Set<StatusLog> statusLog;
 	
+	private PatientPrefs prefs;
+	
 	public Patient() {
 		super();
 	}
@@ -36,7 +36,7 @@ public class Patient {
 	public Patient( String name, long lastLogin,
 			Boolean isActive, Set<Medication> prescriptions,
 			Set<Physician> physicians, Set<PainLog> painLog,
-			Set<MedicationLog> medLog, Set<StatusLog> statusLog) {
+			Set<MedicationLog> medLog, Set<StatusLog> statusLog, PatientPrefs prefs) {
 		super();
 		this.name = name;
 		this.lastLogin = lastLogin;
@@ -46,6 +46,7 @@ public class Patient {
 		this.painLog = painLog;
 		this.medLog = medLog;
 		this.statusLog = statusLog;
+		this.prefs = prefs;
 	}
 
 
@@ -120,6 +121,14 @@ public class Patient {
 		this.statusLog = statusLog;
 	}
 
+	public PatientPrefs getPrefs() {
+		return prefs;
+	}
+
+	public void setPrefs(PatientPrefs prefs) {
+		this.prefs = prefs;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -167,7 +176,7 @@ public class Patient {
 				+ lastLogin + ", isActive=" + isActive + ", prescriptions="
 				+ prescriptions + ", physicians=" + physicians + ", painLog="
 				+ painLog + ", medLog=" + medLog + ", statusLog=" + statusLog
-				+ "]";
+				+ ", prefs=" + prefs + "]";
 	}
 	
 }
