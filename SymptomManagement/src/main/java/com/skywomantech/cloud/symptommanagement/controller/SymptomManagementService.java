@@ -110,8 +110,9 @@ public class SymptomManagementService implements SymptomManagementApi {
 	}
 
 	@RequestMapping(value=MEDICATION_PATH+ID_PATH, method=RequestMethod.GET)
-	public @ResponseBody Medication getMedication(@RequestParam(ID_PARAMETER) long medId) {
-		return medications.findOne(medId);
+	public @ResponseBody Medication getMedication(@RequestParam(ID_PARAMETER) String medId) {
+		BigInteger id = new BigInteger(medId);
+		return medications.findOne(id);
 	}
 
 	@RequestMapping(value=MEDICATION_PATH, method=RequestMethod.POST)
@@ -121,18 +122,22 @@ public class SymptomManagementService implements SymptomManagementApi {
 	}
 
 	@RequestMapping(value=MEDICATION_PATH+ID_PATH, method=RequestMethod.PUT)
-	public @ResponseBody Medication updateMedication(long medId, @RequestBody Medication medication) {
-		medication.setId(BigInteger.valueOf(medId));
+	public @ResponseBody Medication updateMedication(String medId, @RequestBody Medication medication) {
+		BigInteger id = new BigInteger(medId);
+		medication.setId(id);
 		return medications.save(medication);
 	}
 
 	@RequestMapping(value=MEDICATION_PATH+ID_PATH, method=RequestMethod.DELETE)
-	public @ResponseBody void deleteMedication(@RequestParam(ID_PARAMETER) long medId) {
-		medications.delete(medId);
+	public @ResponseBody void deleteMedication(@RequestParam(ID_PARAMETER) String medId) {
+		BigInteger id = new BigInteger(medId);
+		medications.delete(id);
 	}
 
 	@RequestMapping(value=MEDICATION_SEARCH_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Medication> findByMedicationName(@RequestParam(NAME_PARAMETER) String name) {
 		return medications.findByName(name);
 	}
+
+
 }

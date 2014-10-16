@@ -1,5 +1,6 @@
 package com.skywomantech.cloud.symptommanagement.client;
 
+import java.math.BigInteger;
 import java.util.Collection;
 
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
@@ -76,16 +77,16 @@ public interface SymptomManagementApi {
 	public Collection<Medication> getAllMedications();
 	
 	@GET(MEDICATION_PATH+ID_PATH)
-	public Medication getMedication(@Path(ID_PARAMETER) long medId);
+	public Medication getMedication(@Path(ID_PARAMETER) String medId);
 	
 	@POST(MEDICATION_PATH)
 	public Medication addMedication(@Body Medication medication);
 	
 	@PUT(MEDICATION_PATH+ID_PATH)
-	public Medication updateMedication(@Path(ID_PARAMETER) long medId, @Body Medication medication);	
+	public Medication updateMedication(@Path(ID_PARAMETER) String medId, @Body Medication medication);	
 	
 	@DELETE(MEDICATION_PATH+ID_PATH)
-	public void deleteMedication(@Path(ID_PARAMETER) long medId);
+	public void deleteMedication(@Path(ID_PARAMETER) String medId);
 	
 	@GET(MEDICATION_SEARCH_PATH)
 	public Collection<Medication> findByMedicationName(@Query(NAME_PARAMETER) String name);
