@@ -1,6 +1,5 @@
 package com.skywomantech.cloud.symptommanagement.repository;
 
-import java.math.BigInteger;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
@@ -8,7 +7,7 @@ import org.springframework.data.annotation.Id;
 public class Patient {
 
 	@Id
-	private BigInteger id;
+	private String id;
 	private String name;
 	private long lastLogin;
 	private Boolean isActive;
@@ -50,12 +49,12 @@ public class Patient {
 	}
 
 
-	public BigInteger getId() {
+	public String getId() {
 		return id;
 	}
 
 
-	public void setId(BigInteger id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

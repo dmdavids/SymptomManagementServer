@@ -22,8 +22,4 @@ public class Application extends RepositoryRestMvcConfiguration {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Override
-	public ObjectMapper halObjectMapper(){
-		return new ResourcesMapper();
-	}
 }

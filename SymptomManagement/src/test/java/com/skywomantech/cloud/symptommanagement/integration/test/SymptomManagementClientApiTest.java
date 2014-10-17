@@ -1,6 +1,6 @@
 package com.skywomantech.cloud.symptommanagement.integration.test;
 
-import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -63,19 +63,19 @@ public class SymptomManagementClientApiTest {
 		Patient updatedPatient = smController.addPatient(p);
 		assertNotNull(updatedPatient);
 
-	    Collection<Patient> patients = smController.getAllPatients();
+	    Collection<Patient> patients = smController.getPatientList();
 		assertTrue(patients.contains(updatedPatient));
 
 
 		Physician dr2 = smController.addPhysician(dr);
 		assertNotNull(dr2);
 		
-		Collection<Physician> drs = smController.getAllPhysicians();
+		Collection<Physician> drs = smController.getPhysicianList();
 		assertTrue(drs.contains(dr2));
 	
 		 Medication m2 = smController.addMedication(med);
 
-		 Collection<Medication> meds = smController.getAllMedications();
+		 Collection<Medication> meds = smController.getMedicationList();
 		assertTrue(meds.contains(m2));		
 		
 	}

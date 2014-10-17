@@ -9,7 +9,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
 
 @RepositoryRestResource(path = SymptomManagementApi.PATIENT_PATH)
-public interface PatientRepository extends MongoRepository<Patient, Long>{
+public interface PatientRepository extends MongoRepository<Patient, String>{
 	
 	// Find all patients with a similar name
     public Collection<Patient> findByName(

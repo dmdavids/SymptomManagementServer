@@ -1,6 +1,6 @@
 package com.skywomantech.cloud.symptommanagement.repository;
 
-import java.math.BigInteger;
+
 import java.util.Collection;
 
 import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 public class Physician {
 
 	@Id
-	private BigInteger id;
+	private String id;
 	private String name;
 	private Collection<Patient> patients;
 	
@@ -31,11 +31,11 @@ public class Physician {
 	}
 
 
-	public BigInteger getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(BigInteger id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -56,7 +56,6 @@ public class Physician {
 	public void setPatients(Collection<Patient> patients) {
 		this.patients = patients;
 	}
-
 
 
 	@Override
@@ -95,7 +94,5 @@ public class Physician {
 		return "Physician [id=" + id + ", name=" + name + ", patients="
 				+ patients + "]";
 	}
-
-
 	
 }

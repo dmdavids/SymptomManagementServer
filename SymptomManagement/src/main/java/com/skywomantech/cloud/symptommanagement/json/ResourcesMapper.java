@@ -67,7 +67,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
     }
    ]
  * 
- * This alternate format allows us to directly unmarshall the HTTP response bodies from the VideoRepository
+ * This alternate format allows us to directly unmarshal the HTTP response bodies from the VideoRepository
  * into a list of Video objects.
  * 
  * @author jules
