@@ -21,6 +21,8 @@ import com.skywomantech.cloud.symptommanagement.repository.PatientRepository;
 import com.skywomantech.cloud.symptommanagement.repository.Physician;
 import com.skywomantech.cloud.symptommanagement.repository.PhysicianRepository;
 
+// TODO: Before saving make sure that objects are unique in appropriate fields
+// TODO: Before saving or updating do field validation (e.g. correctness, uniqueness, etc.)
 @Controller
 public class SymptomManagementService {
 
@@ -114,6 +116,18 @@ public class SymptomManagementService {
 	@RequestMapping(value=SymptomManagementApi.MEDICATION_PATH+SymptomManagementApi.ID_PATH, method=RequestMethod.GET)
 	public @ResponseBody Medication getMedication(@PathVariable(SymptomManagementApi.ID_PARAMETER) String id) {
 		return medications.findOne(id);
+	}
+	
+	@RequestMapping(value=SymptomManagementApi.MEDICATION_PATH, method=RequestMethod.POST)
+	public @ResponseBody Medication addMedication(@RequestBody Medication medication) {
+		return medications.save(medication);
+	}
+	
+	@RequestMapping(value=SymptomManagementApi.MEDICATION_PATH+SymptomManagementApi.ID_PATH, method=RequestMethod.PUT)
+	public @ResponseBody Medication updateMedication(@PathVariable(SymptomManagementApi.ID_PARAMETER) String id,
+			@RequestBody Medication medication) {
+		medication.setId(id);
+		return medications.save(medication);
 	}
 
 	@RequestMapping(value=SymptomManagementApi.MEDICATION_SEARCH_PATH, method=RequestMethod.GET)

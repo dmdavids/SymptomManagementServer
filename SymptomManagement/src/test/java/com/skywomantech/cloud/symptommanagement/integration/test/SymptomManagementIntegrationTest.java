@@ -1,12 +1,15 @@
 package com.skywomantech.cloud.symptommanagement.integration.test;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,9 +19,11 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.skywomantech.cloud.symptommanagement.Application;
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
+import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementService;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
 import com.skywomantech.cloud.symptommanagement.repository.Physician;
@@ -56,6 +61,10 @@ import com.skywomantech.cloud.symptommanagement.testdata.TestData;
 @ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
 public class SymptomManagementIntegrationTest {
 
+	// Ask Spring to automatically construct and inject your VideoSvc
+	// into the test
+	@Autowired
+	private SymptomManagementService smController;
 
 	// This is the mock interface to our application that we will use to 
 	// send mock HTTP requests
@@ -64,6 +73,7 @@ public class SymptomManagementIntegrationTest {
 	@Before
 	public void setUp() {
 		// Setup Spring test in standalone mode with our controller that it built
+		mockMvc = MockMvcBuilders.standaloneSetup(smController).build();
 	}
 	
 	// This test is the integration testing equivalent of the
