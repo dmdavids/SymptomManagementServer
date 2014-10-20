@@ -12,6 +12,6 @@ import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
 public interface PhysicianRepository extends MongoRepository<Physician, String> {
 
 	// Find all patients with a similar name
-    public Collection<Physician> findByName(
-    		@Param(SymptomManagementApi.NAME_PARAMETER) String name);
+    public Collection<Physician> findByLastName(
+    		@Param(SymptomManagementApi.NAME_PARAMETER) String lastName);
 }

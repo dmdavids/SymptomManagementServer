@@ -52,7 +52,7 @@ public interface SymptomManagementApi {
 	public Patient deletePatient(@Path(ID_PARAMETER) String id);		
 	
 	@GET(PATIENT_SEARCH_PATH)
-	public Collection<Patient> findByPatientName(@Query(NAME_PARAMETER) String name);
+	public Collection<Patient> findByPatientLastName(@Query(NAME_PARAMETER) String lastName);
 	
 	@GET(PHYSICIAN_PATH)
 	public Collection<Physician> getPhysicianList();
@@ -70,7 +70,7 @@ public interface SymptomManagementApi {
 	public Physician deletePhysician(@Path(ID_PARAMETER) String userId);
 	
 	@GET(PHYSICIAN_SEARCH_PATH)
-	public Collection<Physician> findByPhysicianName(@Query(NAME_PARAMETER) String name);
+	public Collection<Physician> findByPhysicianLastName(@Query(NAME_PARAMETER) String lastName);
 	
 	@GET(MEDICATION_PATH+ID_PATH)
 	public Medication getMedication(@Path(ID_PARAMETER) String id);

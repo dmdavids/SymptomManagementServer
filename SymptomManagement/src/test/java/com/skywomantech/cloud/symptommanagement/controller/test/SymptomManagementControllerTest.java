@@ -78,23 +78,23 @@ public class SymptomManagementControllerTest {
 	@Test
 	public void testPatientDrMeds() throws Exception {
 
-//		Patient p2 = smController.addPatient(p);
-//		assertNotNull(p2);
-//
-//		Collection<Patient> patients = smController.getAllPatients();
-//		assertTrue(patients.contains(p2));
-//		
-//		Physician dr2 = smController.addPhysician(dr);
-//		assertNotNull(dr2);
-//
-//		Collection<Physician> drs = smController.getAllPhysicians();
-//		assertTrue(drs.contains(dr2));
-//		
-//		Medication m2 =  smController.addMedication(med);
-//		assertNotNull(m2);
-//
-//		Collection<Medication> meds = smController.getAllMedications();
-//		assertTrue(meds.contains(m2));
+		Patient p2 = smController.addPatient(p);
+		//assertNotNull(p2);
+
+		Collection<Patient> patients = smController.getPatientList();
+		//assertTrue(patients.contains(p2));
+		
+		Physician dr2 = smController.addPhysician(dr);
+		//assertNotNull(dr2);
+
+		Collection<Physician> drs = smController.getPhysicianList();
+		//assertTrue(drs.contains(dr2));
+		
+		Medication m2 =  smController.addMedication(med);
+		//assertNotNull(m2);
+
+		Collection<Medication> meds = smController.getMedicationList();
+		//assertTrue(meds.contains(m2));
 	}
 
 }

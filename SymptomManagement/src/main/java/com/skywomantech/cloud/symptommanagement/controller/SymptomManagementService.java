@@ -69,12 +69,12 @@ public class SymptomManagementService {
 	}
 
 	@RequestMapping(value=SymptomManagementApi.PATIENT_SEARCH_PATH, method=RequestMethod.GET)
-	public @ResponseBody Collection<Patient> findByPatientName(@RequestParam(SymptomManagementApi.NAME_PARAMETER) String name) {
-		return patients.findByName(name);
+	public @ResponseBody Collection<Patient> findByPatientLastName(@RequestParam(SymptomManagementApi.NAME_PARAMETER) String lastName) {
+		return patients.findByLastName(lastName);
 	}
 
 	@RequestMapping(value=SymptomManagementApi.PHYSICIAN_PATH, method=RequestMethod.GET)
-	public @ResponseBody Collection<Physician> getAllPhysicians() {
+	public @ResponseBody Collection<Physician> getPhysicianList() {
 		return physicians.findAll();
 	}
 
@@ -104,12 +104,12 @@ public class SymptomManagementService {
 	}
 
 	@RequestMapping(value=SymptomManagementApi.PHYSICIAN_SEARCH_PATH, method=RequestMethod.GET)
-	public @ResponseBody Collection<Physician> findByPhysicianName(@RequestParam(SymptomManagementApi.NAME_PARAMETER) String name) {
-		return physicians.findByName(name);
+	public @ResponseBody Collection<Physician> findByPhysicianName(@RequestParam(SymptomManagementApi.NAME_PARAMETER) String lastName) {
+		return physicians.findByLastName(lastName);
 	}
 
 	@RequestMapping(value=SymptomManagementApi.MEDICATION_PATH, method=RequestMethod.GET)
-	public @ResponseBody Collection<Medication> getAllMedications() {
+	public @ResponseBody Collection<Medication> getMedicationList() {
 		return medications.findAll();
 	}
 	

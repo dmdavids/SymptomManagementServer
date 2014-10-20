@@ -32,18 +32,14 @@ public class TestData {
 	 * @return
 	 */
 	public static Patient randomPatient() {
-		String name = "Donald Duck";
-		//Patient p = null;
-		return new Patient(name);
+		return new Patient("Donald", "Duck");
 	}
 	
 	
 	public static Physician randomPhysician() {
-		String name = "Minnie Mouse";
-		String patientName = "Daisy";
 		Set<Patient> patients = new HashSet<Patient>();
-		patients.add(new Patient(patientName));
-		Physician p = new Physician(name, patients );
+		patients.add(new Patient("Daisy", "Duck"));
+		Physician p = new Physician("Minnie", "Mouse", patients );
 		return p;
 	}
 	
