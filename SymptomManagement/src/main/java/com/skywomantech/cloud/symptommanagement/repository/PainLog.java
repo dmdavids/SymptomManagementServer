@@ -8,11 +8,31 @@ import org.springframework.data.annotation.Id;
 public class PainLog {
 	
 	public enum Severity {
-		NOT_DEFINED, WELL_CONTROLLED, MODERATE, SEVERE
+		NOT_DEFINED(0), WELL_CONTROLLED(100), MODERATE(200), SEVERE(300);
+		
+		private final int value;
+		
+	    private Severity(int value) {
+	        this.value = value;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
 	}
 	
 	public enum Eating {
-		NOT_DEFINED, EATING, SOME_EATING, NOT_EATING
+		NOT_DEFINED(0), EATING(100), SOME_EATING(200), NOT_EATING(300);
+		
+		private final int value;
+		
+	    private Eating(int value) {
+	        this.value = value;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
 	}
 	
 	@Id

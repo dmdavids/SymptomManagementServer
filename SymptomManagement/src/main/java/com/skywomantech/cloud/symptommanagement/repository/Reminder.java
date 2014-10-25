@@ -11,7 +11,20 @@ public class Reminder {
 	private String alarm;
 	private boolean isOn;
 	
-	public enum ReminderType { PAIN, MED, GENERIC };
+	public enum ReminderType {
+		PAIN(1), MED(2), GENERIC(3);
+
+		private final int value;
+
+		private ReminderType(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	};
+	
 	private ReminderType reminderType; 
 
 	

@@ -9,7 +9,6 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.skywomantech.cloud.symptommanagement.json.ResourcesMapper;
 
 @EnableAutoConfiguration
 @EnableMongoRepositories
