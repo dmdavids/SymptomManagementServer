@@ -44,7 +44,7 @@ dependencies {
     compile("com.google.guava:guava:17.0")
     compile("com.squareup.retrofit:retrofit:1.6.0")
     compile("commons-io:commons-io:2.4")
-    
+    runtime "org.codehaus.groovy:groovy" 
     testCompile("junit:junit")
 }
 

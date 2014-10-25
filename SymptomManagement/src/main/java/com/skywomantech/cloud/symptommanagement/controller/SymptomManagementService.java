@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.MedicationRepository;
+import com.skywomantech.cloud.symptommanagement.repository.Alert;
+import com.skywomantech.cloud.symptommanagement.repository.AlertRepository;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
 import com.skywomantech.cloud.symptommanagement.repository.PatientRepository;
 import com.skywomantech.cloud.symptommanagement.repository.Physician;
@@ -36,6 +38,9 @@ public class SymptomManagementService {
 	
 	@Autowired
 	private MedicationRepository medications;
+	
+	@Autowired
+	private AlertRepository alerts;
 
 	@RequestMapping(value=SymptomManagementApi.PATIENT_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Patient> getPatientList() {
@@ -82,6 +87,7 @@ public class SymptomManagementService {
 	public @ResponseBody Physician getPhysician(@PathVariable(SymptomManagementApi.ID_PARAMETER) String id) {
 		return physicians.findOne(id);
 	}
+	
 
 	@RequestMapping(value=SymptomManagementApi.PHYSICIAN_PATH, method=RequestMethod.POST)
 	public @ResponseBody Physician addPhysician(@RequestBody Physician physician) {
@@ -108,6 +114,30 @@ public class SymptomManagementService {
 		return physicians.findByLastName(lastName);
 	}
 
+	@RequestMapping(value=SymptomManagementApi.PHYSICIAN_ALERT_PATH, method=RequestMethod.GET)
+	public @ResponseBody Collection<Alert> getPatientAlerts(@PathVariable(SymptomManagementApi.ID_PARAMETER) String id) {
+		return alerts.findByPhysicianId(id);
+	}
+	
+	@RequestMapping(value=SymptomManagementApi.ALERT_PATH, method=RequestMethod.GET)
+	public @ResponseBody Collection<Alert> getAlertList() {
+		return alerts.findAll();
+	}
+
+	@RequestMapping(value=SymptomManagementApi.ALERT_PATH, method=RequestMethod.POST)
+	public @ResponseBody Alert addAlert(@RequestBody Alert alert) {
+		return alerts.save(alert);
+	}
+	
+	@RequestMapping(value=SymptomManagementApi.ALERT_PATH+SymptomManagementApi.ID_PATH, method=RequestMethod.DELETE)
+	public @ResponseBody Alert deleteNotification(@PathVariable(SymptomManagementApi.ID_PARAMETER) String id) {
+		Alert found = alerts.findOne(id);
+		if (found != null) {
+			alerts.delete(id);
+		}
+		return found;
+	}
+	
 	@RequestMapping(value=SymptomManagementApi.MEDICATION_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Medication> getMedicationList() {
 		return medications.findAll();
