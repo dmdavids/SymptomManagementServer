@@ -12,7 +12,7 @@ public class Patient {
 	private String lastName;
 	private long birthdate;
 	private long lastLogin;
-	private Boolean isActive;
+	private Boolean active;
 	
 	private Set<Medication> prescriptions;
 	private Set<Physician> physicians;
@@ -32,7 +32,7 @@ public class Patient {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = System.currentTimeMillis();
-		this.isActive = true;
+		this.active = true;
 		this.lastLogin = 0L;
 	}
 	
@@ -45,7 +45,7 @@ public class Patient {
 		this.lastName = lastName;
 		this.birthdate = birthdate;
 		this.lastLogin = lastLogin;
-		this.isActive = isActive;
+		this.active = isActive;
 		this.prescriptions = prescriptions;
 		this.physicians = physicians;
 		this.painLog = painLog;
@@ -98,12 +98,12 @@ public class Patient {
 		this.lastLogin = lastLogin;
 	}
 
-	public Boolean getIsActive() {
-		return isActive;
+	public Boolean isActive() {
+		return active;
 	}
 
 	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
+		this.active = isActive;
 	}
 
 	public Set<Medication> getPrescriptions() {
@@ -200,7 +200,7 @@ public class Patient {
 	public String toString() {
 		return "Patient [id=" + id + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", birthdate=" + birthdate + ", lastLogin="
-				+ lastLogin + ", isActive=" + isActive + ", prescriptions="
+				+ lastLogin + ", active=" + active + ", prescriptions="
 				+ prescriptions + ", physicians=" + physicians + ", painLog="
 				+ painLog + ", medLog=" + medLog + ", statusLog=" + statusLog
 				+ ", prefs=" + prefs + "]";
