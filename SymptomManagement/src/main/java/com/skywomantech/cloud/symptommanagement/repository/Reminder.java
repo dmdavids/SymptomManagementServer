@@ -10,7 +10,7 @@ public class Reminder {
 	private int hour;
 	private int minutes;
 	private String alarm;
-	private boolean isOn;
+	private boolean on;
 	
 	public enum ReminderType {
 		PAIN(1), MED(2), GENERIC(3);
@@ -74,11 +74,11 @@ public class Reminder {
 	}
 
 	public boolean isOn() {
-		return isOn;
+		return on;
 	}
 
 	public void setOn(boolean isOn) {
-		this.isOn = isOn;
+		this.on = on;
 	}
 
 	public ReminderType getReminderType() {
@@ -106,7 +106,7 @@ public class Reminder {
 
         if (dayOfWeek != reminder.dayOfWeek) return false;
         if (hour != reminder.hour) return false;
-        if (isOn != reminder.isOn) return false;
+        if (on != reminder.on) return false;
         if (minutes != reminder.minutes) return false;
         if (Id != null ? !Id.equals(reminder.Id) : reminder.Id != null) return false;
         if (alarm != null ? !alarm.equals(reminder.alarm) : reminder.alarm != null) return false;
@@ -124,7 +124,7 @@ public class Reminder {
         result = 31 * result + hour;
         result = 31 * result + minutes;
         result = 31 * result + (alarm != null ? alarm.hashCode() : 0);
-        result = 31 * result + (isOn ? 1 : 0);
+        result = 31 * result + (on ? 1 : 0);
         result = 31 * result + (reminderType != null ? reminderType.hashCode() : 0);
         return result;
     }
@@ -138,7 +138,7 @@ public class Reminder {
                 ", hour=" + hour +
                 ", minutes=" + minutes +
                 ", alarm='" + alarm + '\'' +
-                ", isOn=" + isOn +
+                ", on=" + on +
                 ", reminderType=" + reminderType +
                 '}';
     }

@@ -13,4 +13,5 @@ public interface AlertRepository extends MongoRepository<Alert, String>{
 		
 	// Find all notifications for specified physician
 	public Collection<Alert> findByPhysicianId(@PathVariable(SymptomManagementApi.ID_PARAMETER) String id);
+
 }
