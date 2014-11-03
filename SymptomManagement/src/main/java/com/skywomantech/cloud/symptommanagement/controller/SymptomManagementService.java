@@ -75,15 +75,15 @@ public class SymptomManagementService {
 			@PathVariable(SymptomManagementApi.ID_PARAMETER) String id,
 			@RequestBody Patient patient) {
 
-		 // sort all logs descending by date before saving
-		 sortStatusLogs(patient);
-		 sortMedLogs(patient);
-		 sortPainLogs(patient);
-		
-		 // create any alerts for this patient
-		 processAlerts(id, patient);
-		
-		 //save the patient
+		// sort all logs descending by date before saving
+		sortStatusLogs(patient);
+		sortMedLogs(patient);
+		sortPainLogs(patient);
+
+		// create any alerts for this patient
+		processAlerts(id, patient);
+
+		// save the patient
 		return patients.save(patient);
 	}
 
@@ -226,14 +226,16 @@ public class SymptomManagementService {
 			// let's make an alert for each doctor so that we can track who
 			// knows and who doesn't separately
 			LOG.debug("Patient is SEVERE so we are creating alerts for doctors.");
-			for (Physician md : patient.getPhysicians()) {
-				LOG.debug("Creating alert for Dr. :" + md.toString());
-				Alert alert = new Alert();
-				alert.setPatientId(id);
-				alert.setPhysicianId(md.getId());
-				alert.setPatientName(patient.getName());
-				alert.setCreated(System.currentTimeMillis());
-				alerts.save(alert);
+			if (patient.getPhysicians() != null) {
+				for (Physician md : patient.getPhysicians()) {
+					LOG.debug("Creating alert for Dr. :" + md.toString());
+					Alert alert = new Alert();
+					alert.setPatientId(id);
+					alert.setPhysicianId(md.getId());
+					alert.setPatientName(patient.getName());
+					alert.setCreated(System.currentTimeMillis());
+					alerts.save(alert);
+				}
 			}
 		}
 	}
@@ -242,10 +244,12 @@ public class SymptomManagementService {
 		LOG.debug("deleting all Alerts for patient.");
 		Collection<Alert> alist = alerts.findAll();
 		int count = 0;
-		for (Alert a : alist) {
-			if (a.getPatientId().equals(id)) {
-				count++;
-				alerts.delete(a.getId());
+		if (alist != null & alist.size() > 0) {
+			for (Alert a : alist) {
+				if (a.getPatientId().equals(id)) {
+					count++;
+					alerts.delete(a.getId());
+				}
 			}
 		}
 		return count;
@@ -258,39 +262,42 @@ public class SymptomManagementService {
 		long twelveHoursAgo = getHoursFromNow(-12);
 
 		// check 12+ hours of severe pain
-		for (PainLog p : patient.getPainLog()) {
-			if (p.getSeverity().getValue() < PainLog.Severity.SEVERE.getValue())
-				break;
-			else if (p.getCreated() >= twelveHoursAgo) {
-				LOG.debug("Patient has been severe for 12+ hours.");
-				return true;
-			}
-		}
-
-		// check for moderate to severe pain
-		for (PainLog p : patient.getPainLog()) {
-			// patient is OK
-			if (p.getSeverity().getValue() < PainLog.Severity.MODERATE
-					.getValue())
-				break;
-			else if (p.getCreated() >= sixteenHoursAgo) {
-				LOG.debug("Patient has been MODERATE to SEVERE for 16+ hours");
-				return true;
+		if (patient.getPainLog() != null && patient.getPainLog().size() > 0) {
+			for (PainLog p : patient.getPainLog()) {
+				if (p.getSeverity().getValue() < PainLog.Severity.SEVERE
+						.getValue())
+					break;
+				else if (p.getCreated() >= twelveHoursAgo) {
+					LOG.debug("Patient has been severe for 12+ hours.");
+					return true;
+				}
 			}
 
-		}
+			// check for moderate to severe pain
+			for (PainLog p : patient.getPainLog()) {
+				// patient is OK
+				if (p.getSeverity().getValue() < PainLog.Severity.MODERATE
+						.getValue())
+					break;
+				else if (p.getCreated() >= sixteenHoursAgo) {
+					LOG.debug("Patient has been MODERATE to SEVERE for 16+ hours");
+					return true;
+				}
 
-		// check for not eating
-		for (PainLog p : patient.getPainLog()) {
-			// patient is OK
-			if (p.getEating().getValue() < PainLog.Eating.NOT_EATING.getValue())
-				break;
-			if (p.getCreated() >= twelveHoursAgo) {
-				LOG.debug("Patient has not eaten for 12+ hours.");
-				return true;
+			}
+
+			// check for not eating
+			for (PainLog p : patient.getPainLog()) {
+				// patient is OK
+				if (p.getEating().getValue() < PainLog.Eating.NOT_EATING
+						.getValue())
+					break;
+				if (p.getCreated() >= twelveHoursAgo) {
+					LOG.debug("Patient has not eaten for 12+ hours.");
+					return true;
+				}
 			}
 		}
-
 		return false;
 	}
 
@@ -302,6 +309,8 @@ public class SymptomManagementService {
 
 	private void sortPainLogs(Patient patient) {
 		Collection<PainLog> logs = patient.getPainLog();
+		if (logs == null || logs.size() == 0)
+			return;
 		PainLogSorter sorter = new PainLogSorter();
 		TreeSet<PainLog> sortedLogs = new TreeSet<PainLog>(
 				Collections.reverseOrder(sorter));
@@ -314,6 +323,8 @@ public class SymptomManagementService {
 
 	private void sortStatusLogs(Patient patient) {
 		Collection<StatusLog> logs = patient.getStatusLog();
+		if (logs == null || logs.size() == 0)
+			return;
 		StatusLogSorter sorter = new StatusLogSorter();
 		TreeSet<StatusLog> sortedLogs = new TreeSet<StatusLog>(
 				Collections.reverseOrder(sorter));
@@ -326,6 +337,8 @@ public class SymptomManagementService {
 
 	private void sortMedLogs(Patient patient) {
 		Collection<MedicationLog> logs = patient.getMedLog();
+		if (logs == null || logs.size() == 0)
+			return;
 		MedLogSorter sorter = new MedLogSorter();
 		TreeSet<MedicationLog> sortedLogs = new TreeSet<MedicationLog>(
 				Collections.reverseOrder(sorter));

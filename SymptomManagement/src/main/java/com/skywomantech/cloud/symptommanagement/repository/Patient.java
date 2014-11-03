@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Patient {
 
 	@Id
@@ -62,6 +64,7 @@ public class Patient {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public String getName() {
 		return lastName + ", " + firstName;
 	}
