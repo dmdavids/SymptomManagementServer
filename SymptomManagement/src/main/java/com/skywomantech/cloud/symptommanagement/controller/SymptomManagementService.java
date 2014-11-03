@@ -50,6 +50,8 @@ public class SymptomManagementService {
 	@Autowired
 	private AlertRepository alerts;
 
+	
+	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  PATIENT APIs =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Patient> getPatientList() {
 		return patients.findAll();
@@ -64,8 +66,6 @@ public class SymptomManagementService {
 
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH, method = RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
-		LOG.debug("Adding this patient : " + patient);
-		// new patient should not have any logs to process yet
 		return patients.save(patient);
 	}
 
@@ -75,15 +75,18 @@ public class SymptomManagementService {
 			@PathVariable(SymptomManagementApi.ID_PARAMETER) String id,
 			@RequestBody Patient patient) {
 
+		LOG.debug("Updating the Patient Records - BEGIN");
 		// sort all logs descending by date before saving
 		sortStatusLogs(patient);
 		sortMedLogs(patient);
 		sortPainLogs(patient);
 
+		LOG.debug("Creating alerts for this patient");
 		// create any alerts for this patient
 		processAlerts(id, patient);
 
 		// save the patient
+		LOG.debug("FINAL Saving the patient to storage.");
 		return patients.save(patient);
 	}
 
@@ -104,6 +107,8 @@ public class SymptomManagementService {
 		return patients.findByLastName(lastName);
 	}
 
+	
+	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  PHYSICIAN APIS=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Physician> getPhysicianList() {
 		return physicians.findAll();
@@ -172,6 +177,8 @@ public class SymptomManagementService {
 		}
 		return found;
 	}
+	
+	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  MEDICATION APIS =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Medication> getMedicationList() {
@@ -216,6 +223,11 @@ public class SymptomManagementService {
 		}
 		return found;
 	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////
+	//  PRIVATE METHODS
+	////////////////////////////////////////////////////////////////////////////
 
 	private void processAlerts(String id, Patient patient) {
 		LOG.debug("Processing Alerts for patient :" + patient.toString());
@@ -252,51 +264,71 @@ public class SymptomManagementService {
 				}
 			}
 		}
+		LOG.debug("Final count of deleted Alerts : " + Integer.toString(count));
 		return count;
 	}
 
 	// assumes pain logs have descending order for created dates
 	private boolean isPatientSevere(Patient patient) {
-		// negative values are in past
+		
+		// Create values to check against...negative values are in past
 		long sixteenHoursAgo = getHoursFromNow(-16);
 		long twelveHoursAgo = getHoursFromNow(-12);
 
-		// check 12+ hours of severe pain
-		if (patient.getPainLog() != null && patient.getPainLog().size() > 0) {
-			for (PainLog p : patient.getPainLog()) {
-				if (p.getSeverity().getValue() < PainLog.Severity.SEVERE
-						.getValue())
+		LOG.debug("Checking Severity of Patient : 12 Hours Ago is " + Long.toString(twelveHoursAgo) 
+				+ " 16 hours ago is " + Long.toString(sixteenHoursAgo));
+		Collection<PainLog> logs = patient.getPainLog();
+		if (logs != null && logs.size() > 0) {
+			
+			// check 12+ hours of severe pain
+			LOG.debug("Checking for 12+ hours of severe pain.");
+			for (PainLog p : logs) {
+				if (p.getSeverity().getValue() < PainLog.Severity.SEVERE.getValue()) {
+					LOG.debug("Patient is not SEVERE.");
 					break;
+				}
 				else if (p.getCreated() >= twelveHoursAgo) {
 					LOG.debug("Patient has been severe for 12+ hours.");
 					return true;
+				} else {
+					LOG.debug("This log indicates SEVERE checking next one. " + p.toString());
 				}
 			}
 
 			// check for moderate to severe pain
-			for (PainLog p : patient.getPainLog()) {
+			LOG.debug("Checking for 16+ hours of moderate to severe pain.");
+			for (PainLog p : logs) {
 				// patient is OK
-				if (p.getSeverity().getValue() < PainLog.Severity.MODERATE
-						.getValue())
+				if (p.getSeverity().getValue() < PainLog.Severity.MODERATE.getValue()) {
+					LOG.debug("Patient is not MODERATE to SEVERE.");
 					break;
+				}
 				else if (p.getCreated() >= sixteenHoursAgo) {
 					LOG.debug("Patient has been MODERATE to SEVERE for 16+ hours");
 					return true;
+				} else {
+					LOG.debug("This log indications MODERATE to SEVERE checking next one. " + p.toString());
 				}
 
 			}
 
 			// check for not eating
-			for (PainLog p : patient.getPainLog()) {
+			LOG.debug("Checking for 12+ hours of not eating.");
+			for (PainLog p : logs) {
 				// patient is OK
-				if (p.getEating().getValue() < PainLog.Eating.NOT_EATING
-						.getValue())
+				if (p.getEating().getValue() < PainLog.Eating.NOT_EATING.getValue()) {
+					LOG.debug("Patient is EATING.");
 					break;
+				}
 				if (p.getCreated() >= twelveHoursAgo) {
 					LOG.debug("Patient has not eaten for 12+ hours.");
 					return true;
+				}else {
+					LOG.debug("This log indications NOT EATING checking next one. " + p.toString());
 				}
 			}
+		} else {
+			LOG.debug("There are no pain logs so cannot check severity.");
 		}
 		return false;
 	}
@@ -308,6 +340,7 @@ public class SymptomManagementService {
 	}
 
 	private void sortPainLogs(Patient patient) {
+		LOG.debug("Sorting Pain Logs by reverse creation date");
 		Collection<PainLog> logs = patient.getPainLog();
 		if (logs == null || logs.size() == 0)
 			return;
@@ -318,10 +351,11 @@ public class SymptomManagementService {
 			sortedLogs.add(p);
 		}
 		patient.setPainLog(sortedLogs);
-		LOG.debug("Sorted Pain Logs :" + sortedLogs.toString());
+		
 	}
 
 	private void sortStatusLogs(Patient patient) {
+		LOG.debug("Sorting Status Logs by reverse creation date");
 		Collection<StatusLog> logs = patient.getStatusLog();
 		if (logs == null || logs.size() == 0)
 			return;
@@ -332,10 +366,11 @@ public class SymptomManagementService {
 			sortedLogs.add(p);
 		}
 		patient.setStatusLog(sortedLogs);
-		LOG.debug("Sorted Status Logs :" + sortedLogs.toString());
+		
 	}
 
 	private void sortMedLogs(Patient patient) {
+		LOG.debug("Sorting Medication Logs by reverse creation date");
 		Collection<MedicationLog> logs = patient.getMedLog();
 		if (logs == null || logs.size() == 0)
 			return;
@@ -346,7 +381,7 @@ public class SymptomManagementService {
 			sortedLogs.add(p);
 		}
 		patient.setMedLog(sortedLogs);
-		LOG.debug("Sorted Medication Logs :" + sortedLogs.toString());
+		
 	}
 
 	private class PainLogSorter implements Comparator<PainLog> {
