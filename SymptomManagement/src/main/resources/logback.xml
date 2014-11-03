@@ -9,7 +9,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.skywomantech.cloud.symptommanagement" level="INFO" additivity="false">
+	<logger name="com.skywomantech.cloud.symptommanagement" level="VERBOSE" additivity="false">
             <appender-ref ref="STDOUT" />
 	</logger>
 
