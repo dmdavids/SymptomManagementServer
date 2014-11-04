@@ -4,19 +4,29 @@ import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserCredentials {
+public class UserCredential {
 	
-	public enum UserType {
-		NOT_ASSIGNED, ADMIN, PHYSICIAN, PATIENT
+	public enum UserRole {
+		NOT_ASSIGNED(-1), ADMIN(500), PHYSICIAN(300), PATIENT(200);
+	
+		private final int value;
+		
+	    private UserRole(int value) {
+	        this.value = value;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
 	}
 	
 	@Id 
 	private String id;
 	private String userId;
-	private String loginName;
+	private String userName;
 	@JsonIgnore
 	private String password;
-	private UserType userType = UserType.NOT_ASSIGNED;
+	private UserRole userRole = UserRole.NOT_ASSIGNED;
 	
 	
 	public String getId() {
@@ -31,11 +41,11 @@ public class UserCredentials {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getLoginName() {
-		return loginName;
+	public String getUserName() {
+		return userName;
 	}
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getPassword() {
 		return password;
@@ -43,24 +53,25 @@ public class UserCredentials {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public UserType getUserType() {
-		return userType;
+	public UserRole getUserType() {
+		return userRole;
 	}
-	public void setUserType(UserType userType) {
-		this.userType = userType;
+	public void setUserType(UserRole userRole) {
+		this.userRole = userRole;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
-				+ ((loginName == null) ? 0 : loginName.hashCode());
+				+ ((userName == null) ? 0 : userName.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result
-				+ ((userType == null) ? 0 : userType.hashCode());
+				+ ((userRole == null) ? 0 : userRole.hashCode());
 		return result;
 	}
 	@Override
@@ -69,18 +80,18 @@ public class UserCredentials {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof UserCredentials))
+		if (!(obj instanceof UserCredential))
 			return false;
-		UserCredentials other = (UserCredentials) obj;
+		UserCredential other = (UserCredential) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (loginName == null) {
-			if (other.loginName != null)
+		if (userName == null) {
+			if (other.userName != null)
 				return false;
-		} else if (!loginName.equals(other.loginName))
+		} else if (!userName.equals(other.userName))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -92,14 +103,15 @@ public class UserCredentials {
 				return false;
 		} else if (!userId.equals(other.userId))
 			return false;
-		if (userType != other.userType)
+		if (userRole != other.userRole)
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "UserCredentials [id=" + id + ", userId=" + userId
-				+ ", loginName=" + loginName + ", password=NOT_DISPLAYED" 
-				+ ", userType=" + userType + "]";
+		return "UserCredential [id=" + id + ", userId=" + userId
+				+ ", userName=" + userName + ", password=NOT_DISPLAYED" 
+				+ ", userRole=" + userRole + "]";
 	}
 }

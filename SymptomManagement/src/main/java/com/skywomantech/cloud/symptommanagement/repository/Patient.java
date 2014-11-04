@@ -31,8 +31,8 @@ public class Patient {
 	
 	public Patient( String firstName, String lastName ){
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstName = firstName.trim();
+		this.lastName = lastName.trim();
 		this.birthdate = System.currentTimeMillis();
 		this.active = true;
 		this.lastLogin = 0L;
@@ -43,8 +43,8 @@ public class Patient {
 			Set<Physician> physicians, Set<PainLog> painLog,
 			Set<MedicationLog> medLog, Set<StatusLog> statusLog, PatientPrefs prefs) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstName = firstName.trim();
+		this.lastName = lastName.trim();
 		this.birthdate = birthdate;
 		this.lastLogin = lastLogin;
 		this.active = isActive;
@@ -65,16 +65,29 @@ public class Patient {
 	}
 
 	@JsonIgnore
-	public String getName() {
-		return lastName + ", " + firstName;
-	}
+    public String getName() {
+        String name = "";
+        if (firstName != null && !firstName.isEmpty()) name += firstName;
+        if (!name.isEmpty()) name += " ";
+        if (lastName != null  && !lastName.isEmpty()) name+= lastName;
+        return name;
+    }
+
+	@JsonIgnore
+    public String getUserName() {
+        String name = "";
+        if (firstName != null && !firstName.isEmpty()) name += firstName;
+        if (!name.isEmpty()) name += ".";
+        if (lastName != null  && !lastName.isEmpty()) name+= lastName;
+        return name;
+    }
 
 	public String getFirstName() {
 		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.firstName = firstName.trim();
 	}
 
 	public String getLastName() {
@@ -82,7 +95,7 @@ public class Patient {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastName = lastName.trim();
 	}
 
 	public long getBirthdate() {

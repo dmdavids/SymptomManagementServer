@@ -20,6 +20,12 @@ public class User implements UserDetails {
 		return new User(username, password, authorities);
 	}
 	
+	public static UserDetails create(String username, String password,
+			Collection<GrantedAuthority>authorities) {
+		
+		return new User(username, password, authorities);
+	}
+	
 	private final Collection<GrantedAuthority> authorities_;
 	private final String password_;
 	private final String username_;

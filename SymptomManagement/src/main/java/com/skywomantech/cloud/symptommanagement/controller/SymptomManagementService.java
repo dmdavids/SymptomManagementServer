@@ -29,6 +29,8 @@ import com.skywomantech.cloud.symptommanagement.repository.PatientRepository;
 import com.skywomantech.cloud.symptommanagement.repository.Physician;
 import com.skywomantech.cloud.symptommanagement.repository.PhysicianRepository;
 import com.skywomantech.cloud.symptommanagement.repository.StatusLog;
+import com.skywomantech.cloud.symptommanagement.repository.UserCredential;
+import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
 
 // TODO: Before saving make sure that objects are unique in appropriate fields
 // TODO: Before saving or updating do field validation (e.g. correctness, uniqueness, etc.)
@@ -49,6 +51,9 @@ public class SymptomManagementService {
 
 	@Autowired
 	private AlertRepository alerts;
+	
+	@Autowired
+	private UserCredentialRepository credentials;
 
 	
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  PATIENT APIs =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -66,7 +71,12 @@ public class SymptomManagementService {
 
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH, method = RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
-		return patients.save(patient);
+		Patient savedPatient =  patients.save(patient);
+		// whenever we create a new patient then we add their credentials too
+		if (savedPatient != null) {
+			addCredentials(savedPatient);
+		}
+		return savedPatient;
 	}
 
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH
@@ -123,7 +133,12 @@ public class SymptomManagementService {
 
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH, method = RequestMethod.POST)
 	public @ResponseBody Physician addPhysician(@RequestBody Physician physician) {
-		return physicians.save(physician);
+		Physician savedPhysician = physicians.save(physician);
+		// add login credentials for this new patient
+		if (savedPhysician != null) {
+			addCredentials(savedPhysician);
+		}
+		return savedPhysician;
 	}
 
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH
@@ -228,6 +243,36 @@ public class SymptomManagementService {
 	/////////////////////////////////////////////////////////////////////////////
 	//  PRIVATE METHODS
 	////////////////////////////////////////////////////////////////////////////
+	
+	private void addCredentials(Patient patient) {
+		LOG.debug("Adding CREDENTIALS for new patient : " + patient.toString());
+		UserCredential credential = new UserCredential();
+		credential.setUserId(patient.getId());
+		credential.setPassword("pass");
+		credential.setUserName(patient.getUserName());  // first.last
+		credential.setUserType(UserCredential.UserRole.PATIENT);
+		UserCredential saved = credentials.save(credential);
+		if (saved == null) {
+			LOG.error("ERROR : Credentials did not SAVE!!");
+		} else {
+			LOG.debug("Credential SAVED is: " + saved.toString());
+		}
+	}
+	
+	private void addCredentials(Physician physician) {
+		LOG.debug("Adding CREDENTIALS for new physician : " + physician.toString());
+		UserCredential credential = new UserCredential();
+		credential.setUserId(physician.getId());
+		credential.setPassword("pass");
+		credential.setUserName(physician.getUserName());  // first.last
+		credential.setUserType(UserCredential.UserRole.PHYSICIAN);
+		UserCredential saved = credentials.save(credential);
+		if (saved == null) {
+			LOG.error("ERROR : Credentials did not SAVE!!");
+		} else {
+			LOG.debug("Credential SAVED is: " + saved.toString());
+		}
+	}
 
 	private void processAlerts(String id, Patient patient) {
 		LOG.debug("Processing Alerts for patient :" + patient.toString());

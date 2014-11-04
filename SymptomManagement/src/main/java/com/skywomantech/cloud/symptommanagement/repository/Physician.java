@@ -5,6 +5,8 @@ import java.util.Collection;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 public class Physician {
 
@@ -20,15 +22,15 @@ public class Physician {
 
 	public Physician(String firstName, String lastName) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstName = firstName.trim();
+		this.lastName = lastName.trim();
 		this.patients = null;
 	}
 
 	public Physician(String firstName, String lastName, Collection<Patient> patients) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstName = firstName.trim();
+		this.lastName = lastName.trim();
 		this.patients = patients;
 	}
 
@@ -41,7 +43,11 @@ public class Physician {
 	}
 
 	public String getName() {
-		return lastName + ", " + firstName;
+        String name = "";
+        if (firstName != null && !firstName.isEmpty()) name += firstName;
+        if (!name.isEmpty()) name += " ";
+        if (lastName != null  && !lastName.isEmpty()) name+= lastName;
+        return name;
 	}
 
 	public String getFirstName() {
@@ -49,7 +55,7 @@ public class Physician {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.firstName = firstName.trim();
 	}
 
 	public String getLastName() {
@@ -57,8 +63,17 @@ public class Physician {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastName = lastName.trim();
 	}
+	
+	@JsonIgnore
+    public String getUserName() {
+        String name = "";
+        if (firstName != null && !firstName.isEmpty()) name += firstName;
+        if (!name.isEmpty()) name += ".";
+        if (lastName != null  && !lastName.isEmpty()) name+= lastName;
+        return name;
+    }
 
 	public Collection<Patient> getPatients() {
 		return patients;

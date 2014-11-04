@@ -24,24 +24,24 @@ import org.springframework.security.oauth2.provider.client.ClientDetailsUserDeta
 public class ClientAndUserDetailsService implements UserDetailsService,
 		ClientDetailsService {
 
-	private final ClientDetailsService clients_;
+	private final ClientDetailsService mClients;
 
-	private final UserDetailsService users_;
+	private final UserDetailsService mUsers;
 	
-	private final ClientDetailsUserDetailsService clientDetailsWrapper_;
+	private final ClientDetailsUserDetailsService mClientDetailsWrapper;
 
 	public ClientAndUserDetailsService(ClientDetailsService clients,
 			UserDetailsService users) {
 		super();
-		clients_ = clients;
-		users_ = users;
-		clientDetailsWrapper_ = new ClientDetailsUserDetailsService(clients_);
+		mClients = clients;
+		mUsers = users;
+		mClientDetailsWrapper = new ClientDetailsUserDetailsService(mClients);
 	}
 
 	@Override
 	public ClientDetails loadClientByClientId(String clientId)
 			throws ClientRegistrationException {
-		return clients_.loadClientByClientId(clientId);
+		return mClients.loadClientByClientId(clientId);
 	}
 	
 	@Override
@@ -49,9 +49,9 @@ public class ClientAndUserDetailsService implements UserDetailsService,
 			throws UsernameNotFoundException {
 		UserDetails user = null;
 		try{
-			user = users_.loadUserByUsername(username);
+			user = mUsers.loadUserByUsername(username);
 		}catch(UsernameNotFoundException e){
-			user = clientDetailsWrapper_.loadUserByUsername(username);
+			user = mClientDetailsWrapper.loadUserByUsername(username);
 		}
 		return user;
 	}
