@@ -35,7 +35,9 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 		if (username == null || username.isEmpty()) 
 			throw new UsernameNotFoundException("Invalid user name.  User name is null or empty");
 		
-		Collection<UserCredential> userCredentials;
+		LOG.debug("USERNAME is : " + username);
+		
+		Collection<UserCredential> userCredentials = null;
 		
 		// Get the credentials
 		if (username.toLowerCase().contentEquals("admin")) {
@@ -49,7 +51,13 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 			userCredentials.add(adminCredential);
 		} else {
 			// try to find the username in the patients and physicians credential repository
-			userCredentials = credentials.findByUserName(username);
+			// TODO: try - catch this for NullPointerException?
+			LOG.debug("Finding Credential by USER NAME : " + username);
+			try {
+				userCredentials = credentials.findByUserName(username);
+			} catch (Exception e) {
+				LOG.debug("Unable to find Credentials for " + username);
+			}
 		}
 		
 		// validate the credentials
@@ -74,7 +82,7 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 	private List<String> getAuthorities(UserCredential.UserRole role) {
 		LOG.debug("Setting up the User Authorities list for User Role of " + role);
 		
-		if (role == UserCredential.UserRole.NOT_ASSIGNED)
+		if (role == null || role == UserCredential.UserRole.NOT_ASSIGNED)
 			return null;
 		
 		List<String> authList = new ArrayList<String>();
