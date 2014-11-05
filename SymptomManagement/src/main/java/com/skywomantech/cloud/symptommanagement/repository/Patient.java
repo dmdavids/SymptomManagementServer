@@ -12,7 +12,7 @@ public class Patient {
 	private String id;
 	private String firstName;
 	private String lastName;
-	private long birthdate;
+	private String birthdate;
 	private long lastLogin;
 	private Boolean active;
 	
@@ -33,12 +33,12 @@ public class Patient {
 		super();
 		this.firstName = firstName.trim();
 		this.lastName = lastName.trim();
-		this.birthdate = System.currentTimeMillis();
+		this.birthdate = "";
 		this.active = true;
 		this.lastLogin = 0L;
 	}
 	
-	public Patient( String firstName, String lastName, long birthdate, long lastLogin,
+	public Patient( String firstName, String lastName, String birthdate, long lastLogin,
 			Boolean isActive, Set<Medication> prescriptions,
 			Set<Physician> physicians, Set<PainLog> painLog,
 			Set<MedicationLog> medLog, Set<StatusLog> statusLog, PatientPrefs prefs) {
@@ -98,11 +98,11 @@ public class Patient {
 		this.lastName = lastName.trim();
 	}
 
-	public long getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(long birthdate) {
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 
@@ -174,7 +174,8 @@ public class Patient {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (birthdate ^ (birthdate >>> 32));
+		result = prime * result
+				+ ((birthdate == null) ? 0 : birthdate.hashCode());
 		result = prime * result
 				+ ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -192,7 +193,10 @@ public class Patient {
 		if (!(obj instanceof Patient))
 			return false;
 		Patient other = (Patient) obj;
-		if (birthdate != other.birthdate)
+		if (birthdate == null) {
+			if (other.birthdate != null)
+				return false;
+		} else if (!birthdate.equals(other.birthdate))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)
@@ -221,6 +225,7 @@ public class Patient {
 				+ painLog + ", medLog=" + medLog + ", statusLog=" + statusLog
 				+ ", prefs=" + prefs + "]";
 	}
+
 
 	
 }
