@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
 
-@RepositoryRestResource(path = "/credential")
+@RepositoryRestResource(path = SymptomManagementApi.CREDENTIAL_PATH)
 public interface UserCredentialRepository extends MongoRepository<UserCredential, String>{
 
 		// Find all credentials with a matching name

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ import com.skywomantech.cloud.symptommanagement.repository.PhysicianRepository;
 import com.skywomantech.cloud.symptommanagement.repository.StatusLog;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredential;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
+import com.skywomantech.cloud.symptommanagement.repository.UserCredential.UserRole;
 
 // TODO: Before saving make sure that objects are unique in appropriate fields
 // TODO: Before saving or updating do field validation (e.g. correctness, uniqueness, etc.)
@@ -237,6 +239,26 @@ public class SymptomManagementService {
 			medications.delete(id);
 		}
 		return found;
+	}
+	
+	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  CREDENTIAL APIS =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+	@RequestMapping(value = SymptomManagementApi.CREDENTIAL_SEARCH_PATH, method = RequestMethod.GET)
+	public @ResponseBody Collection<UserCredential> findByUserName(
+			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String username) {
+		
+		// handle the hard-coded admin stuff
+		if (username.toLowerCase().contentEquals("admin")) {
+			UserCredential cred = new UserCredential();
+			cred.setId("");
+			cred.setUserId("");
+			cred.setUserName(username);
+			cred.setUserType(UserRole.ADMIN);
+			Collection<UserCredential> creds = new HashSet<UserCredential>();
+			creds.add(cred);
+			return creds;
+		}
+		
+		return credentials.findByUserName(username);
 	}
 	
 	

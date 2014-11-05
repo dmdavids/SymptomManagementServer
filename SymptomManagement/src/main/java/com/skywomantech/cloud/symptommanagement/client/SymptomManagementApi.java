@@ -7,6 +7,7 @@ import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.Alert;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
 import com.skywomantech.cloud.symptommanagement.repository.Physician;
+import com.skywomantech.cloud.symptommanagement.repository.UserCredential;
 
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -29,6 +30,7 @@ public interface SymptomManagementApi {
 	public static final String PHYSICIAN_PATH = "/physician";
 	public static final String MEDICATION_PATH = "/medication";
 	public static final String ALERT_PATH = "/alert";
+	public static final String CREDENTIAL_PATH = "/credential";
 	
 	public static final String NAME_PARAMETER = "name";
 	public static final String ID_PATH = "/{id}";
@@ -38,6 +40,7 @@ public interface SymptomManagementApi {
 	public static final String PATIENT_SEARCH_PATH = PATIENT_PATH + SEARCH_PATH;
 	public static final String PHYSICIAN_SEARCH_PATH = PHYSICIAN_PATH + SEARCH_PATH;
 	public static final String MEDICATION_SEARCH_PATH = MEDICATION_PATH + SEARCH_PATH;
+	public static final String CREDENTIAL_SEARCH_PATH = CREDENTIAL_PATH + SEARCH_PATH;
 
 	
 	// access any severe patients via /physician/{id}/notification
@@ -98,7 +101,7 @@ public interface SymptomManagementApi {
 	@DELETE(ALERT_PATH+ID_PATH)
 	public Alert deleteAlert(@Path(ID_PARAMETER) String alertId);
 	
-	//Begin Medication
+	// BEGIN Medication
 	
 	@GET(MEDICATION_PATH+ID_PATH)
 	public Medication getMedication(@Path(ID_PARAMETER) String id);
@@ -117,4 +120,11 @@ public interface SymptomManagementApi {
 	
 	@GET(MEDICATION_SEARCH_PATH)
 	public Collection<Medication> findByMedicationName(@Query(NAME_PARAMETER) String name);
+	
+	// BEGIN Credential
+	@GET(CREDENTIAL_SEARCH_PATH)
+	public Collection<UserCredential> findByUserName(@Query(NAME_PARAMETER) String username);
+	
+	
+	
 }

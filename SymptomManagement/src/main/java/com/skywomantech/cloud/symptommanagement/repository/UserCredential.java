@@ -9,24 +9,40 @@ public class UserCredential {
 	public enum UserRole {
 		NOT_ASSIGNED(-1), ADMIN(500), PHYSICIAN(300), PATIENT(200);
 	
-		private final int value;
-		
+		private int value;
+
 	    private UserRole(int value) {
 	        this.value = value;
 	    }
 
-	    public int getValue() {
-	        return value;
-	    }
+        public int getValue() {
+            return value;
+        }
+        
+        public void setValue(int value) {
+        	this.value = value;
+        }
+
+        public static UserRole findByValue(int val){
+            for(UserRole r : values()){
+                if( r.getValue() == val ){
+                    return r;
+                }
+            }
+            return NOT_ASSIGNED;
+        }
 	}
 	
 	@Id 
 	private String id;
 	private String userId;
 	private String userName;
+	private UserRole userRole = UserRole.NOT_ASSIGNED;
+	private int userRoleValue = UserRole.NOT_ASSIGNED.getValue();
+	
 	@JsonIgnore
 	private String password;
-	private UserRole userRole = UserRole.NOT_ASSIGNED;
+
 	
 	
 	public String getId() {
@@ -58,6 +74,15 @@ public class UserCredential {
 	}
 	public void setUserType(UserRole userRole) {
 		this.userRole = userRole;
+		setUserRoleValue(userRole.getValue());
+	}
+	
+	public int getUserRoleValue() {
+		return userRoleValue;
+	}
+	
+	public void setUserRoleValue(int userRoleValue) {
+		this.userRoleValue = userRoleValue;
 	}
 	
 	@Override
@@ -111,7 +136,10 @@ public class UserCredential {
 	@Override
 	public String toString() {
 		return "UserCredential [id=" + id + ", userId=" + userId
-				+ ", userName=" + userName + ", password=NOT_DISPLAYED" 
-				+ ", userRole=" + userRole + "]";
+				+ ", userName=" + userName + ", userRole=" + userRole
+				+ ", userRoleValue=" + userRoleValue + ", password=" + password
+				+ "]";
 	}
+	
+
 }
