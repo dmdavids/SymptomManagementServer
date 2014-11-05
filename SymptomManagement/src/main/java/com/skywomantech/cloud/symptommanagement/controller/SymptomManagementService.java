@@ -245,6 +245,7 @@ public class SymptomManagementService {
 	@RequestMapping(value = SymptomManagementApi.CREDENTIAL_SEARCH_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<UserCredential> findByUserName(
 			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String username) {
+		// always lowercase the username
 		
 		// handle the hard-coded admin stuff
 		if (username.toLowerCase().contentEquals("admin")) {
@@ -258,7 +259,7 @@ public class SymptomManagementService {
 			return creds;
 		}
 		
-		return credentials.findByUserName(username);
+		return credentials.findByUserName(username.toLowerCase());
 	}
 	
 	
@@ -271,8 +272,8 @@ public class SymptomManagementService {
 		UserCredential credential = new UserCredential();
 		credential.setUserId(patient.getId());
 		credential.setPassword("pass");
-		credential.setUserName(patient.getUserName());  // first.last
-		credential.setUserType(UserCredential.UserRole.PATIENT);
+		credential.setUserName(patient.getUserName().toLowerCase());  // first.last lowercase
+		credential.setUserType(UserCredential.UserRole.PATIENT); // auto sets the user role value
 		UserCredential saved = credentials.save(credential);
 		if (saved == null) {
 			LOG.error("ERROR : Credentials did not SAVE!!");
@@ -286,7 +287,7 @@ public class SymptomManagementService {
 		UserCredential credential = new UserCredential();
 		credential.setUserId(physician.getId());
 		credential.setPassword("pass");
-		credential.setUserName(physician.getUserName());  // first.last
+		credential.setUserName(physician.getUserName().toLowerCase());  // first.last lowercase
 		credential.setUserType(UserCredential.UserRole.PHYSICIAN);
 		UserCredential saved = credentials.save(credential);
 		if (saved == null) {
