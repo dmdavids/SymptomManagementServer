@@ -38,6 +38,7 @@ public class Patient {
 		this.lastLogin = 0L;
 	}
 	
+	
 	public Patient( String firstName, String lastName, String birthdate, long lastLogin,
 			Boolean isActive, Set<Medication> prescriptions,
 			Set<Physician> physicians, Set<PainLog> painLog,
@@ -226,6 +227,22 @@ public class Patient {
 				+ ", prefs=" + prefs + "]";
 	}
 
-
+	/**
+	 * We only want the patient id, name and birthdate 
+	 * to be put in the physician's record so we don't just copy all 
+	 * the other non-essential volatile stuff
+	 * 
+	 * @param p patient to copy
+	 * @return copy of p with only name, id, and birthdate
+	 */
+	public static synchronized Patient cloneForPhysician(Patient p) {
+		Patient p2 = new Patient();
+		p2.setId(p.getId());
+		p2.setFirstName(p.getFirstName());
+		p2.setLastName(p.getLastName());
+		p2.setBirthdate(p.getBirthdate());
+		return p2;
+		
+	}
 	
 }

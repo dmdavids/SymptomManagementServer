@@ -32,6 +32,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
+
 /**
  * Configure this web application to use OAuth 2.0.
  *
@@ -115,6 +117,7 @@ public class OAuth2SecurityConfiguration {
 		// Delegate the processing of Authentication requests to the framework
 		@Autowired
 		private AuthenticationManager authenticationManager;
+		
 
 		// A data structure used to store both a ClientDetailsService and a
 		// UserDetailsService
@@ -166,6 +169,7 @@ public class OAuth2SecurityConfiguration {
 //							User.create("user3", "pass", "USER"),
 //							User.create("user4", "pass", "USER"),
 //							User.create("user5", "pass", "USER")));
+			
 			
 			UserDetailsService svc = new SymptomManagmentUserDetailsManager();
 

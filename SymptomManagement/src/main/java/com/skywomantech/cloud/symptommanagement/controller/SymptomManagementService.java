@@ -1,5 +1,6 @@
 package com.skywomantech.cloud.symptommanagement.controller;
 
+import java.security.Principal;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -72,8 +73,8 @@ public class SymptomManagementService {
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH, method = RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
 		Patient savedPatient =  patients.save(patient);
-		// whenever we create a new patient then we add their credentials too
 		if (savedPatient != null) {
+			// whenever we create a new patient then we add their credentials too
 			addCredentials(savedPatient);
 		}
 		return savedPatient;
@@ -83,9 +84,9 @@ public class SymptomManagementService {
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.PUT)
 	public @ResponseBody Patient updatePatient(
 			@PathVariable(SymptomManagementApi.ID_PARAMETER) String id,
-			@RequestBody Patient patient) {
+			@RequestBody Patient patient, Principal principal) {
 
-		LOG.debug("Updating the Patient Records - BEGIN");
+		LOG.debug("Updating the Patient Records - BEGIN - User is  : " + principal.getName());
 		// sort all logs descending by date before saving
 		sortStatusLogs(patient);
 		sortMedLogs(patient);
@@ -97,7 +98,77 @@ public class SymptomManagementService {
 
 		// save the patient
 		LOG.debug("FINAL Saving the patient to storage.");
-		return patients.save(patient);
+		Patient savedPatient =  patients.save(patient);
+		if (savedPatient != null) {
+			if (principal.getName().toLowerCase().equals("admin")) {
+				// lets make sure that the physicians are notified of this patient
+				// ... design decision was for ADMIN to add physicians to patient 
+				// but not visa versa so patient is authority on physicians assigned
+				// and we need to keep in sync ... better to do it on server to
+				// keep app from a transactional nightmare
+				updatePhysicianPatientList(savedPatient);
+			} else {
+				LOG.info("This user is not admin so we won't bother about the doctor update.");
+			}
+		}
+		return savedPatient;
+	}
+
+	private void updatePhysicianPatientList(Patient patient) {
+		Collection<Physician> doctors = patient.getPhysicians();
+		if (doctors == null) {
+			LOG.debug("This patient has not doctors assigned to them.");
+			return;
+		}
+		
+		// make a copy of the patient that only has select fields in it
+		Patient clonedPatient = Patient.cloneForPhysician(patient);
+		LOG.debug("The Cloned Patient is : " + clonedPatient.toString());
+		
+		// check all the doctors assigned to the patient and make sure 
+		// they have the patient in their lists too
+		for (Physician dr : doctors) {
+			LOG.debug("Checking this doctor's list : " + dr.getName());
+			Physician thisDoctor = physicians.findOne(dr.getId());
+			if (thisDoctor != null) { 
+				addPatient(thisDoctor, clonedPatient);	
+			} else {
+				LOG.error("Something fishy! "
+						+ "Could not find this doctor by id: " + dr.getId());
+				// ignore and keep moving
+			}
+		} 
+	}
+
+	private void addPatient(Physician thisDoctor, Patient clonedPatient) {
+		LOG.info("Adding patient to physician list.");
+		
+		// if no patients assigned to doctor then add this one
+		// else find out if its already there and do nothing
+		// else add it and save it
+		boolean found = false;
+		if (thisDoctor.getPatients() == null) {
+			thisDoctor.setPatients(new HashSet<Patient>());
+			
+		} else {  
+			LOG.debug("Check to see if the patient is in the doctor's list already.");
+			for(Patient p : thisDoctor.getPatients()) {
+				if (p.getId() == clonedPatient.getId()) {
+					found = true;
+					LOG.debug("We found the patient there already. Good to go.");
+					break; // its already there so done
+				} 
+			}	
+		}	
+		// it's not in the list so add it and update the physician's record
+		if (!found) {
+			LOG.debug("We are adding this patient to the doctor's list : " + clonedPatient);
+			thisDoctor.getPatients().add(clonedPatient);
+			Physician checkDr = physicians.save(thisDoctor);
+			if (checkDr == null) {
+				LOG.error("Physician's updated patient list did not save! Something went wrong!");
+			}
+		}
 	}
 
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH

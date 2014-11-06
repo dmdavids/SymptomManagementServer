@@ -30,6 +30,16 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 	@Autowired
 	private UserCredentialRepository credentials;
 
+	
+	public SymptomManagmentUserDetailsManager(UserCredentialRepository creds) {
+		this.credentials = creds;
+	}
+	
+	public SymptomManagmentUserDetailsManager() {
+		super();
+	}
+
+
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
@@ -59,11 +69,14 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 			LOG.debug("Finding Credential by USER NAME : " + username);
 			try {
 				if (credentials == null) {
-					LOG.error("ARGH! WHY IS AUTOWIRED NOT WORKING!!!! USING HARD-CODING");
+					LOG.error("ARGH! WHY IS AUTOWIRED NOT WORKING!!!! "
+							+ "DUMB OPERATOR ERROR ... USING HARD-CODING");
 
 					// HARD-CODED ARGH! Doctors names start with d/e/f/g
-					if (username.startsWith("d") || username.startsWith("e")
-				     || username.startsWith("f") || username.startsWith("g")) {
+					if (username.startsWith("d") 
+							|| username.startsWith("e")
+							|| username.startsWith("f")
+							|| username.startsWith("g")) {
 						userCredentials = new HashSet<UserCredential>();
 						UserCredential physicianCredential = new UserCredential();
 						physicianCredential.setId(null);
@@ -71,7 +84,7 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 						physicianCredential.setPassword(admin_password);
 						physicianCredential.setUserType(UserRole.PHYSICIAN);
 						userCredentials.add(physicianCredential);
-					} else {
+					} else { // all other names are patients
 						userCredentials = new HashSet<UserCredential>();
 						UserCredential patientCredential = new UserCredential();
 						patientCredential.setId(null);
@@ -82,7 +95,8 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 					}
 
 				} else {
-				userCredentials = credentials.findByUserName(username);
+					LOG.debug("OMG is this really working???? I have credentials!");
+					userCredentials = credentials.findByUserName(username);
 				}
 			} catch (Exception e) {
 				LOG.error("Unable to find Credentials for " + username
