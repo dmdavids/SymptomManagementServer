@@ -34,8 +34,6 @@ import com.skywomantech.cloud.symptommanagement.repository.UserCredential;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredential.UserRole;
 
-// TODO: Before saving make sure that objects are unique in appropriate fields
-// TODO: Before saving or updating do field validation (e.g. correctness, uniqueness, etc.)
 @Controller
 public class SymptomManagementService {
 
@@ -266,6 +264,7 @@ public class SymptomManagementService {
 	/////////////////////////////////////////////////////////////////////////////
 	//  PRIVATE METHODS
 	////////////////////////////////////////////////////////////////////////////
+	
 	
 	private void addCredentials(Patient patient) {
 		LOG.debug("Adding CREDENTIALS for new patient : " + patient.toString());

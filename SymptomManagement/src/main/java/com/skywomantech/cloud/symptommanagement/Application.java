@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableMongoRepositories
 @EnableWebMvc
 @Configuration
-@ComponentScan
+@ComponentScan(basePackages = { "com.skywomantech.cloud.symptommanagement" })
 @Import(OAuth2SecurityConfiguration.class)
 public class Application extends RepositoryRestMvcConfiguration {
 	

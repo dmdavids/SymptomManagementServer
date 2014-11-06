@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService;
+import org.springframework.stereotype.Service;
 
 /**
  * A class that combines a UserDetailsService and ClientDetailsService
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.provider.client.ClientDetailsUserDeta
  * @author jules
  *
  */
+@Service
 public class ClientAndUserDetailsService implements UserDetailsService,
 		ClientDetailsService {
 
