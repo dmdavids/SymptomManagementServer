@@ -372,7 +372,8 @@ public class SymptomManagementService {
 
 		int deleted = deleteAlertsByPatientId(id); // clear old alerts if any
 		LOG.debug("Number of alerts deleted: " + Integer.toString(deleted));
-		if (isPatientSevere(patient)) {
+		int severityLevel = CheckForPatientSeverity(patient);
+		if (severityLevel > Alert.PAIN_SEVERITY_LEVEL_0 ) {
 			// let's make an alert for each doctor so that we can track who
 			// knows and who doesn't separately
 			LOG.debug("Patient is SEVERE so we are creating alerts for doctors.");
@@ -384,6 +385,7 @@ public class SymptomManagementService {
 					alert.setPhysicianId(md.getId());
 					alert.setPatientName(patient.getName());
 					alert.setCreated(System.currentTimeMillis());
+					alert.setSeverityLevel(severityLevel);
 					alerts.save(alert);
 				}
 			}
@@ -406,13 +408,14 @@ public class SymptomManagementService {
 		return count;
 	}
 
+
 	// assumes pain logs have descending order for created dates
-	private boolean isPatientSevere(Patient patient) {
+	private int CheckForPatientSeverity(Patient patient) {
 		
 		// Create values to check against...negative values are in past
 		long sixteenHoursAgo = getHoursFromNow(-16);
 		long twelveHoursAgo = getHoursFromNow(-12);
-
+		
 		LOG.debug("Checking Severity of Patient : 12 Hours Ago is " + Long.toString(twelveHoursAgo) 
 				+ " 16 hours ago is " + Long.toString(sixteenHoursAgo));
 		Collection<PainLog> logs = patient.getPainLog();
@@ -427,7 +430,8 @@ public class SymptomManagementService {
 				}
 				else if (p.getCreated() >= twelveHoursAgo) {
 					LOG.debug("Patient has been severe for 12+ hours.");
-					return true;
+					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_4);
+					return Alert.PAIN_SEVERITY_LEVEL_4;
 				} else {
 					LOG.debug("This log indicates SEVERE checking next one. " + p.toString());
 				}
@@ -443,7 +447,8 @@ public class SymptomManagementService {
 				}
 				else if (p.getCreated() >= sixteenHoursAgo) {
 					LOG.debug("Patient has been MODERATE to SEVERE for 16+ hours");
-					return true;
+					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_2);
+					return Alert.PAIN_SEVERITY_LEVEL_2;
 				} else {
 					LOG.debug("This log indications MODERATE to SEVERE checking next one. " + p.toString());
 				}
@@ -460,7 +465,8 @@ public class SymptomManagementService {
 				}
 				if (p.getCreated() >= twelveHoursAgo) {
 					LOG.debug("Patient has not eaten for 12+ hours.");
-					return true;
+					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_1);
+					return Alert.PAIN_SEVERITY_LEVEL_1;
 				}else {
 					LOG.debug("This log indications NOT EATING checking next one. " + p.toString());
 				}
@@ -468,7 +474,7 @@ public class SymptomManagementService {
 		} else {
 			LOG.debug("There are no pain logs so cannot check severity.");
 		}
-		return false;
+		return Alert.PAIN_SEVERITY_LEVEL_0;
 	}
 
 	public static long getHoursFromNow(int hours) {

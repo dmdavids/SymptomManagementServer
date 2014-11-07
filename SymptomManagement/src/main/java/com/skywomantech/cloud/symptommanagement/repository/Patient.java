@@ -15,6 +15,7 @@ public class Patient {
 	private String birthdate;
 	private long lastLogin;
 	private Boolean active;
+	private int severityLevel;
 	
 	private Set<Medication> prescriptions;
 	private Set<Physician> physicians;
@@ -36,10 +37,12 @@ public class Patient {
 		this.birthdate = "";
 		this.active = true;
 		this.lastLogin = 0L;
+		this.severityLevel = 0;
 	}
 	
 	
-	public Patient( String firstName, String lastName, String birthdate, long lastLogin,
+	public Patient( String firstName, String lastName, String birthdate, Boolean severe, 
+			long lastLogin,
 			Boolean isActive, Set<Medication> prescriptions,
 			Set<Physician> physicians, Set<PainLog> painLog,
 			Set<MedicationLog> medLog, Set<StatusLog> statusLog, PatientPrefs prefs) {
@@ -47,6 +50,7 @@ public class Patient {
 		this.firstName = firstName.trim();
 		this.lastName = lastName.trim();
 		this.birthdate = birthdate;
+		this.severityLevel = 0;
 		this.lastLogin = lastLogin;
 		this.active = isActive;
 		this.prescriptions = prescriptions;
@@ -121,6 +125,14 @@ public class Patient {
 
 	public void setIsActive(Boolean isActive) {
 		this.active = isActive;
+	}
+
+	public int getSeverityLevel() {
+		return severityLevel;
+	}
+
+	public void setSeverityLevel(int severityLevel) {
+		this.severityLevel = severityLevel;
 	}
 
 	public Set<Medication> getPrescriptions() {
@@ -220,7 +232,8 @@ public class Patient {
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", birthdate=" + birthdate + ", lastLogin="
+				+ lastName + ", birthdate=" + birthdate + ", severityLevel=" + severityLevel 
+				+ ", lastLogin="
 				+ lastLogin + ", active=" + active + ", prescriptions="
 				+ prescriptions + ", physicians=" + physicians + ", painLog="
 				+ painLog + ", medLog=" + medLog + ", statusLog=" + statusLog
