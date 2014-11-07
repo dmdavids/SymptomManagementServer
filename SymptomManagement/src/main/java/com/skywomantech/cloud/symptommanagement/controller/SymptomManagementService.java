@@ -428,7 +428,7 @@ public class SymptomManagementService {
 					LOG.debug("Patient is not SEVERE.");
 					break;
 				}
-				else if (p.getCreated() >= twelveHoursAgo) {
+				else if (p.getCreated() <= twelveHoursAgo) {
 					LOG.debug("Patient has been severe for 12+ hours.");
 					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_4);
 					return Alert.PAIN_SEVERITY_LEVEL_4;
@@ -445,7 +445,7 @@ public class SymptomManagementService {
 					LOG.debug("Patient is not MODERATE to SEVERE.");
 					break;
 				}
-				else if (p.getCreated() >= sixteenHoursAgo) {
+				else if (p.getCreated() <= sixteenHoursAgo) {
 					LOG.debug("Patient has been MODERATE to SEVERE for 16+ hours");
 					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_2);
 					return Alert.PAIN_SEVERITY_LEVEL_2;
@@ -463,7 +463,7 @@ public class SymptomManagementService {
 					LOG.debug("Patient is EATING.");
 					break;
 				}
-				if (p.getCreated() >= twelveHoursAgo) {
+				if (p.getCreated() <= twelveHoursAgo) {
 					LOG.debug("Patient has not eaten for 12+ hours.");
 					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_1);
 					return Alert.PAIN_SEVERITY_LEVEL_1;
