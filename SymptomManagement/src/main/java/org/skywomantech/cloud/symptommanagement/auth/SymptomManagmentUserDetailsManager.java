@@ -69,6 +69,7 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 			LOG.debug("Finding Credential by USER NAME : " + username);
 			try {
 				if (credentials == null) {
+					// Leaving this in JUST IN CASE it decides not to work again
 					LOG.error("ARGH! WHY IS AUTOWIRED NOT WORKING!!!! "
 							+ "DUMB OPERATOR ERROR ... USING HARD-CODING");
 

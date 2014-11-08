@@ -70,12 +70,17 @@ public class OAuth2SecurityConfiguration {
 
 		@Autowired
 		private UserDetailsService userDetailsService;
+		
+		@Autowired
+		private UserCredentialRepository credentials;
 
 		@Autowired
 		protected void registerAuthentication(
 				final AuthenticationManagerBuilder auth) throws Exception {
-			auth.userDetailsService(userDetailsService);
+			auth.userDetailsService(new SymptomManagmentUserDetailsManager(credentials));
 		}
+		
+		
 	}
 
 	/**
