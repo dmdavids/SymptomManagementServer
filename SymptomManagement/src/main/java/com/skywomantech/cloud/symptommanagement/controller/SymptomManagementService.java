@@ -114,62 +114,6 @@ public class SymptomManagementService {
 		return savedPatient;
 	}
 
-	private void updatePhysicianPatientList(Patient patient) {
-		Collection<Physician> doctors = patient.getPhysicians();
-		if (doctors == null) {
-			LOG.debug("This patient has not doctors assigned to them.");
-			return;
-		}
-		
-		// make a copy of the patient that only has select fields in it
-		Patient clonedPatient = Patient.cloneForPhysician(patient);
-		LOG.debug("The Cloned Patient is : " + clonedPatient.toString());
-		
-		// check all the doctors assigned to the patient and make sure 
-		// they have the patient in their lists too
-		for (Physician dr : doctors) {
-			LOG.debug("Checking this doctor's list : " + dr.getName());
-			Physician thisDoctor = physicians.findOne(dr.getId());
-			if (thisDoctor != null) { 
-				addPatient(thisDoctor, clonedPatient);	
-			} else {
-				LOG.error("Something fishy! "
-						+ "Could not find this doctor by id: " + dr.getId());
-				// ignore and keep moving
-			}
-		} 
-	}
-
-	private void addPatient(Physician thisDoctor, Patient clonedPatient) {
-		LOG.info("Adding patient to physician list.");
-		
-		// if no patients assigned to doctor then add this one
-		// else find out if its already there and do nothing
-		// else add it and save it
-		boolean found = false;
-		if (thisDoctor.getPatients() == null) {
-			thisDoctor.setPatients(new HashSet<Patient>());
-			
-		} else {  
-			LOG.debug("Check to see if the patient is in the doctor's list already.");
-			for(Patient p : thisDoctor.getPatients()) {
-				if (p.getId() == clonedPatient.getId()) {
-					found = true;
-					LOG.debug("We found the patient there already. Good to go.");
-					break; // its already there so done
-				} 
-			}	
-		}	
-		// it's not in the list so add it and update the physician's record
-		if (!found) {
-			LOG.debug("We are adding this patient to the doctor's list : " + clonedPatient);
-			thisDoctor.getPatients().add(clonedPatient);
-			Physician checkDr = physicians.save(thisDoctor);
-			if (checkDr == null) {
-				LOG.error("Physician's updated patient list did not save! Something went wrong!");
-			}
-		}
-	}
 
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.DELETE)
@@ -336,6 +280,63 @@ public class SymptomManagementService {
 	//  PRIVATE METHODS
 	////////////////////////////////////////////////////////////////////////////
 	
+
+	private void updatePhysicianPatientList(Patient patient) {
+		Collection<Physician> doctors = patient.getPhysicians();
+		if (doctors == null) {
+			LOG.debug("This patient has not doctors assigned to them.");
+			return;
+		}
+		
+		// make a copy of the patient that only has select fields in it
+		Patient clonedPatient = Patient.cloneForPhysician(patient);
+		LOG.debug("The Cloned Patient is : " + clonedPatient.toString());
+		
+		// check all the doctors assigned to the patient and make sure 
+		// they have the patient in their lists too
+		for (Physician dr : doctors) {
+			LOG.debug("Checking this doctor's list : " + dr.getName());
+			Physician thisDoctor = physicians.findOne(dr.getId());
+			if (thisDoctor != null) { 
+				addPatient(thisDoctor, clonedPatient);	
+			} else {
+				LOG.error("Something fishy! "
+						+ "Could not find this doctor by id: " + dr.getId());
+				// ignore and keep moving
+			}
+		} 
+	}
+
+	private void addPatient(Physician thisDoctor, Patient clonedPatient) {
+		LOG.info("Adding patient to physician list.");
+		
+		// if no patients assigned to doctor then add this one
+		// else find out if its already there and do nothing
+		// else add it and save it
+		boolean found = false;
+		if (thisDoctor.getPatients() == null) {
+			thisDoctor.setPatients(new HashSet<Patient>());
+			
+		} else {  
+			LOG.debug("Check to see if the patient is in the doctor's list already.");
+			for(Patient p : thisDoctor.getPatients()) {
+				if (p.getId() == clonedPatient.getId()) {
+					found = true;
+					LOG.debug("We found the patient there already. Good to go.");
+					break; // its already there so done
+				} 
+			}	
+		}	
+		// it's not in the list so add it and update the physician's record
+		if (!found) {
+			LOG.debug("We are adding this patient to the doctor's list : " + clonedPatient);
+			thisDoctor.getPatients().add(clonedPatient);
+			Physician checkDr = physicians.save(thisDoctor);
+			if (checkDr == null) {
+				LOG.error("Physician's updated patient list did not save! Something went wrong!");
+			}
+		}
+	}
 	
 	private void addCredentials(Patient patient) {
 		LOG.debug("Adding CREDENTIALS for new patient : " + patient.toString());
