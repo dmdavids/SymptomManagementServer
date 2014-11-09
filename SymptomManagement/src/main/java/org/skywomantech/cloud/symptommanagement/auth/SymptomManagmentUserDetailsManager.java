@@ -71,8 +71,7 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 				if (credentials == null) {
 					// Leaving this in JUST IN CASE it decides not to work again
 					LOG.error("ARGH! WHY IS AUTOWIRED NOT WORKING!!!! "
-							+ "DUMB OPERATOR ERROR ... USING HARD-CODING");
-
+							+ " ... USING HARD-CODING");
 					// HARD-CODED ARGH! Doctors names start with d/e/f/g
 					if (username.startsWith("d") 
 							|| username.startsWith("e")
@@ -96,7 +95,7 @@ public class SymptomManagmentUserDetailsManager implements UserDetailsService {
 					}
 
 				} else {
-					LOG.debug("OMG is this really working???? I have credentials!");
+					LOG.debug("OMG this working... I have credentials!");
 					userCredentials = credentials.findByUserName(username);
 				}
 			} catch (Exception e) {

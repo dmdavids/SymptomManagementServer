@@ -11,6 +11,7 @@ public class Reminder {
 	private int minutes;
 	private String alarm;
 	private boolean on;
+	private long created;
 	
 	public enum ReminderType {
 		PAIN(1), MED(2), GENERIC(3);
@@ -97,39 +98,39 @@ public class Reminder {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Reminder reminder = (Reminder) o;
-
-        if (dayOfWeek != reminder.dayOfWeek) return false;
-        if (hour != reminder.hour) return false;
-        if (on != reminder.on) return false;
-        if (minutes != reminder.minutes) return false;
-        if (Id != null ? !Id.equals(reminder.Id) : reminder.Id != null) return false;
-        if (alarm != null ? !alarm.equals(reminder.alarm) : reminder.alarm != null) return false;
-        if (name != null ? !name.equals(reminder.name) : reminder.name != null) return false;
-        if (reminderType != reminder.reminderType) return false;
-
-        return true;
+    public long getCreated() {
+        return created;
     }
 
-    @Override
-    public int hashCode() {
-        int result = Id != null ? Id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + dayOfWeek;
-        result = 31 * result + hour;
-        result = 31 * result + minutes;
-        result = 31 * result + (alarm != null ? alarm.hashCode() : 0);
-        result = 31 * result + (on ? 1 : 0);
-        result = 31 * result + (reminderType != null ? reminderType.hashCode() : 0);
-        return result;
+    public void setCreated(long created) {
+        this.created = created;
     }
 
+
+
     @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (created ^ (created >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Reminder))
+			return false;
+		Reminder other = (Reminder) obj;
+		if (created != other.created)
+			return false;
+		return true;
+	}
+
+	@Override
     public String toString() {
         return "Reminder{" +
                 "Id=" + Id +
@@ -139,6 +140,7 @@ public class Reminder {
                 ", minutes=" + minutes +
                 ", alarm='" + alarm + '\'' +
                 ", on=" + on +
+                ", created=" + created +
                 ", reminderType=" + reminderType +
                 '}';
     }
