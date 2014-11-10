@@ -1,5 +1,7 @@
 package com.skywomantech.cloud.symptommanagement.controller;
 
+import groovy.util.logging.Log;
+
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Collection;
@@ -184,7 +186,23 @@ public class SymptomManagementService {
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_ALERT_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Alert> getPatientAlerts(
 			@PathVariable(SymptomManagementApi.ID_PARAMETER) String id) {
-		return alerts.findByPhysicianId(id);
+		
+		// before sending the alerts back, check to see if this doctor already responded to the patient
+		// Note: other physicians will still get alerts about this patient only this physician will be turned off
+		Collection<Alert> foundAlerts = alerts.findByPhysicianId(id);
+		if (foundAlerts != null && foundAlerts.size() > 0) {
+			Alert[] alertArray = foundAlerts.toArray(new Alert[foundAlerts.size()]);
+			for (Alert a : alertArray) {
+				StatusLog s = findPhysicianContactedStatus(a);
+				if (s != null) {
+					
+					LOG.debug("Found a Physician Contact Message post-alert"
+							+ "...Removing this alert: " + a.toString());
+					foundAlerts.remove(a);
+				}
+			}
+		}
+		return foundAlerts;
 	}
 
 	@RequestMapping(value = SymptomManagementApi.ALERT_PATH, method = RequestMethod.GET)
@@ -281,6 +299,26 @@ public class SymptomManagementService {
 	////////////////////////////////////////////////////////////////////////////
 	
 
+	private synchronized StatusLog findPhysicianContactedStatus(Alert a) {
+		if (a.getPhysicianId() != null) {
+			Physician dr = physicians.findOne(a.getPhysicianId());
+			if (dr.getPatients() != null) {
+				for (Patient p : dr.getPatients()) {
+					if (p.getStatusLog() != null && p.getStatusLog().size() > 0) {
+						for (StatusLog s : p.getStatusLog()) {
+							if (a.getCreated() < s.getCreated()) {
+								LOG.debug("found status log turning off the alert.");
+								return s;
+							}
+						}
+					}
+				}
+			}
+		}
+		LOG.debug("NO physcian contact message found for the alert.");
+		return null;
+	}
+	
 	private void updatePhysicianPatientList(Patient patient) {
 		Collection<Physician> doctors = patient.getPhysicians();
 		if (doctors == null) {

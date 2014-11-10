@@ -64,6 +64,8 @@ public class Alert {
 		return patientName + " requires immediate attention.";
 	}
 	
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,8 +74,6 @@ public class Alert {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((patientId == null) ? 0 : patientId.hashCode());
-		result = prime * result
-				+ ((patientName == null) ? 0 : patientName.hashCode());
 		result = prime * result
 				+ ((physicianId == null) ? 0 : physicianId.hashCode());
 		return result;
@@ -99,11 +99,6 @@ public class Alert {
 				return false;
 		} else if (!patientId.equals(other.patientId))
 			return false;
-		if (patientName == null) {
-			if (other.patientName != null)
-				return false;
-		} else if (!patientName.equals(other.patientName))
-			return false;
 		if (physicianId == null) {
 			if (other.physicianId != null)
 				return false;
@@ -111,6 +106,7 @@ public class Alert {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "Alert [id=" + id + ", physicianId=" + physicianId
