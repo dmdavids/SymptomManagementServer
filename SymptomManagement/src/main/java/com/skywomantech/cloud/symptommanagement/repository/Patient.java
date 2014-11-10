@@ -17,15 +17,14 @@ public class Patient {
 	private Boolean active;
 	private int severityLevel;
 	
+	private PatientPrefs prefs;
 	private Set<Medication> prescriptions;
 	private Set<Physician> physicians;
 	
 	private Set<PainLog> painLog;
 	private Set<MedicationLog> medLog;
 	private Set<StatusLog> statusLog;
-	
-	private PatientPrefs prefs;
-	
+
 	public Patient() {
 		super();
 	}
