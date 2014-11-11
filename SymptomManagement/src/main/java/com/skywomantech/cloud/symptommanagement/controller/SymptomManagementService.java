@@ -191,14 +191,19 @@ public class SymptomManagementService {
 		// Note: other physicians will still get alerts about this patient only this physician will be turned off
 		Collection<Alert> foundAlerts = alerts.findByPhysicianId(id);
 		if (foundAlerts != null && foundAlerts.size() > 0) {
-			Alert[] alertArray = foundAlerts.toArray(new Alert[foundAlerts.size()]);
-			for (Alert a : alertArray) {
+			LOG.debug("Alerts to be verified: " + foundAlerts.size());
+			//Alert[] alertArray = foundAlerts.toArray(new Alert[foundAlerts.size()]);
+			for (Alert a : foundAlerts) {
+				LOG.debug("Checking this alert: " + a.toString());
 				StatusLog s = findPhysicianContactedStatus(a);
 				if (s != null) {
-					
+					LOG.debug("With this status Log: " + s.toString());
+					a.setphysicianContacted(s.getCreated());
 					LOG.debug("Found a Physician Contact Message post-alert"
-							+ "...Removing this alert: " + a.toString());
-					foundAlerts.remove(a);
+							+ "...setting contacted date to status log created: " + a.toString());
+				}
+				else {
+					LOG.debug("No Status Logs found to compare with.");
 				}
 			}
 		}
@@ -469,8 +474,8 @@ public class SymptomManagementService {
 				}
 				else if (p.getCreated() <= twelveHoursAgo) {
 					LOG.debug("Patient has been severe for 12+ hours.");
-					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_4);
-					return Alert.PAIN_SEVERITY_LEVEL_4;
+					patient.setSeverityLevel(Alert.PAIN_SEVERITY_LEVEL_3);
+					return Alert.PAIN_SEVERITY_LEVEL_3;
 				} else {
 					LOG.debug("This log indicates SEVERE checking next one. " + p.toString());
 				}

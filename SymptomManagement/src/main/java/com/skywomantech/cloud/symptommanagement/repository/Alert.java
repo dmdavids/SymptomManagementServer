@@ -6,14 +6,7 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Alert {
-	
-    public static final int PAIN_SEVERITY_LEVEL_0 = 0;
-	public static final int PAIN_SEVERITY_LEVEL_1 = 10;
-	public static final int PAIN_SEVERITY_LEVEL_2 = 30;
-	public static final int PAIN_SEVERITY_LEVEL_3 = 90;
-	public static final int PAIN_SEVERITY_LEVEL_4 = 100;
-	
-	
+
 	@Id
 	String id;
 	String physicianId;
@@ -21,6 +14,14 @@ public class Alert {
 	String patientName;
 	long created;
 	int severityLevel;
+	long physicianContacted = 0L;
+	
+    public static final int PAIN_SEVERITY_LEVEL_0 = 0;
+	public static final int PAIN_SEVERITY_LEVEL_1 = 10;
+	public static final int PAIN_SEVERITY_LEVEL_2 = 30;
+	public static final int PAIN_SEVERITY_LEVEL_3 = 90;
+	public static final int PAIN_SEVERITY_LEVEL_4 = 100;
+	
 	
 	public String getId() {
 		return id;
@@ -59,11 +60,16 @@ public class Alert {
         this.severityLevel = severityLevel;
     }
 
+	public long getphysicianContacted() {
+		return physicianContacted;
+	}
+	public void setphysicianContacted(long physician_contacted) {
+		this.physicianContacted = physician_contacted;
+	}
 	@JsonIgnore
 	public String getFormattedMessage() {
 		return patientName + " requires immediate attention.";
 	}
-	
 
 	
 	@Override
@@ -78,6 +84,7 @@ public class Alert {
 				+ ((physicianId == null) ? 0 : physicianId.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -112,9 +119,7 @@ public class Alert {
 		return "Alert [id=" + id + ", physicianId=" + physicianId
 				+ ", patientId=" + patientId + ", patientName=" + patientName
 				+ ", created=" + created + ", severityLevel=" + severityLevel
-				+ "]";
+				+ ", physicianContacted=" + physicianContacted + "]";
 	}
-	
-
 	
 }
