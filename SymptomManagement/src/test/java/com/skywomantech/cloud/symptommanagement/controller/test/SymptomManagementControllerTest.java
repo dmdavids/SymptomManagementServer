@@ -54,9 +54,9 @@ public class SymptomManagementControllerTest {
 	@InjectMocks
 	private SymptomManagementService smController;
 
-	private Patient p = TestData.randomPatient();
-	private Physician dr = TestData.randomPhysician();
-	private Medication med = TestData.randomMedication();
+	private Patient p = TestData.randomPatient("Donald", "Duck", "12/11/1944");
+	private Physician dr = TestData.randomPhysician("Minnie", "Mouse");
+	private Medication med = TestData.randomMedication("hugs");
 
 	@Before
 	public void setUp() {

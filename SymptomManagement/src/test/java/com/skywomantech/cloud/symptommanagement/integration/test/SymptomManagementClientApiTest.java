@@ -8,6 +8,8 @@ import java.util.Collection;
 
 import org.junit.Test;
 
+import com.skywomantech.app.symptommanagement.client.oauth.SecuredRestBuilder;
+import com.skywomantech.app.symptommanagement.client.oauth.unsafe.EasyHttpClient;
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
@@ -16,49 +18,35 @@ import com.skywomantech.cloud.symptommanagement.testdata.TestData;
 
 import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
+import retrofit.client.ApacheClient;
 
-/**
- * 
- * This integration test sends a POST request to the VideoServlet to add a new video 
- * and then sends a second GET request to check that the video showed up in the list
- * of videos. Actual network communication using HTTP is performed with this test.
- * 
- * The test requires that the VideoSvc be running first (see the directions in
- * the README.md file for how to launch the Application).
- * 
- * To run this test, right-click on it in Eclipse and select
- * "Run As"->"JUnit Test"
- * 
- * Pay attention to how this test that actually uses HTTP and the test that just
- * directly makes method calls on a VideoSvc object are essentially identical.
- * All that changes is the setup of the videoService variable. Yes, this could
- * be refactored to eliminate code duplication...but the goal was to show how
- * much Retrofit simplifies interaction with our service!
- * 
- * @author jules
- *
- */
+
 public class SymptomManagementClientApiTest {
 
-	private final String TEST_URL = "http://localhost:8080";
+/*	private final String TEST_URL = "http://localhost:8080";
 
 	private SymptomManagementApi smController = new RestAdapter.Builder()
 			.setEndpoint(TEST_URL).setLogLevel(LogLevel.FULL).build()
-			.create(SymptomManagementApi.class);
-
-	private Patient p = TestData.randomPatient();
-	private Physician dr = TestData.randomPhysician();
-	private Medication med = TestData.randomMedication();
+			.create(SymptomManagementApi.class);*/
 	
-	/**
-	 * This test creates a Video, adds the Video to the VideoSvc, and then
-	 * checks that the Video is included in the list when getVideoList() is
-	 * called.
-	 * 
-	 * @throws Exception
-	 */
+    public static final String CLIENT_ID = "mobile";
+    public final static String SERVER_ADDRESS = "https://192.168.0.34:8443";
+    
+	SymptomManagementApi smController = new SecuredRestBuilder()
+    .setLoginEndpoint(SERVER_ADDRESS + SymptomManagementApi.TOKEN_PATH)
+    .setUsername("admin")
+    .setPassword("pass")
+    .setClientId(CLIENT_ID)
+    .setClient(new ApacheClient(new EasyHttpClient()))
+    .setEndpoint(SERVER_ADDRESS).setLogLevel(RestAdapter.LogLevel.FULL).build()
+    .create(SymptomManagementApi.class);
+
+	private Patient p = TestData.randomPatient("Donald", "Duck", "12/11/1944");
+	private Physician dr = TestData.randomPhysician("Minnie", "Mouse");
+	private Medication med = TestData.randomMedication("hugs");
+	
 	@Test
-	public void testVideoAddAndList() throws Exception {
+	public void testUsersAddAndList() throws Exception {
 		
 		Patient updatedPatient = smController.addPatient(p);
 		assertNotNull(updatedPatient);

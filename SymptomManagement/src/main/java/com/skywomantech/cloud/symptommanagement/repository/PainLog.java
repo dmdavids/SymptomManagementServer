@@ -19,6 +19,15 @@ public class PainLog {
 	    public int getValue() {
 	        return value;
 	    }
+	    
+	    public static Severity findByValue(int val){
+            for(Severity s : values()){
+                if( s.getValue() == val ){
+                    return s;
+                }
+            }
+            return NOT_DEFINED;
+        }
 	}
 	
 	public enum Eating {
@@ -33,6 +42,15 @@ public class PainLog {
 	    public int getValue() {
 	        return value;
 	    }
+	    
+        public static Eating findByValue(int val){
+            for(Eating e : values()){
+                if( e.getValue() == val ){
+                    return e;
+                }
+            }
+            return NOT_DEFINED;
+        }
 	}
 	
 	@Id

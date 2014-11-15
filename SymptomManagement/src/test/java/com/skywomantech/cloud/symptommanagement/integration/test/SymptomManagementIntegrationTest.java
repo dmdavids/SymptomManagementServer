@@ -83,9 +83,9 @@ public class SymptomManagementIntegrationTest {
 	// real objects that you specify in your Application class.
 	@Test
 	public void testVideoAddAndList() throws Exception {
-		 Patient p = TestData.randomPatient();
-		 Physician dr = TestData.randomPhysician();
-		 Medication med = TestData.randomMedication();
+		Patient p = TestData.randomPatient("Donald", "Duck", "12/11/1944");
+		Physician dr = TestData.randomPhysician("Minnie", "Mouse");
+		Medication med = TestData.randomMedication("hugs");
 		String pJson = TestData.toJson(p);
 		String drJson = TestData.toJson(dr);
 		String medJson = TestData.toJson(med);
