@@ -66,7 +66,7 @@ public class TestData {
 	
 	public static PainLog randomPainLog() {
 		PainLog log = new PainLog();
-		randomDate = getHoursFromNow(randomDate, 6);
+		randomDate = getHoursFromNow(randomDate, -6);
 		log.setCreated(randomDate);
 		log.setSeverity(getRandomSeverity());
 		log.setEating(getRandomEating());
@@ -88,7 +88,7 @@ public class TestData {
 
 	public static MedicationLog randomMedLog(Medication med) {
 		MedicationLog log = new MedicationLog();
-		randomDate = getHoursFromNow(randomDate, 1);
+		randomDate = getHoursFromNow(randomDate, -1);
 		log.setCreated(randomDate);
 		log.setMed(med);
 		return log;

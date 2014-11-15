@@ -46,7 +46,7 @@ public class BuildTestData {
 	private Patient bellaSwan =TestData.randomPatient("Bella", "Swan", "5/30/1995");
 	
 	private Physician martyMcFly = TestData.randomPhysician("Marty", "McFly");
-	private Physician maryPoppins = TestData.randomPhysician("Harry", "Potter");
+	private Physician maryPoppins = TestData.randomPhysician("Mary", "Poppins");
 	private Physician drWho = TestData.randomPhysician("Dr", "Who");
 	
 	private Medication oxycontin = TestData.randomMedication("OxyContin");
