@@ -1,7 +1,5 @@
 package com.skywomantech.cloud.symptommanagement.controller;
 
-import groovy.util.logging.Log;
-
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Collection;
@@ -13,6 +11,7 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
+import com.skywomantech.cloud.symptommanagement.repository.Alert;
+import com.skywomantech.cloud.symptommanagement.repository.AlertRepository;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.MedicationLog;
 import com.skywomantech.cloud.symptommanagement.repository.MedicationRepository;
-import com.skywomantech.cloud.symptommanagement.repository.Alert;
-import com.skywomantech.cloud.symptommanagement.repository.AlertRepository;
 import com.skywomantech.cloud.symptommanagement.repository.PainLog;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
 import com.skywomantech.cloud.symptommanagement.repository.PatientRepository;
@@ -34,8 +33,8 @@ import com.skywomantech.cloud.symptommanagement.repository.Physician;
 import com.skywomantech.cloud.symptommanagement.repository.PhysicianRepository;
 import com.skywomantech.cloud.symptommanagement.repository.StatusLog;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredential;
-import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredential.UserRole;
+import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
 
 @Controller
 public class SymptomManagementService {
@@ -60,11 +59,13 @@ public class SymptomManagementService {
 
 	
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  PATIENT APIs =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Patient> getPatientList() {
 		return patients.findAll();
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.GET)
 	public @ResponseBody Patient getPatient(
@@ -72,6 +73,7 @@ public class SymptomManagementService {
 		return patients.findOne(id);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH, method = RequestMethod.POST)
 	public @ResponseBody Patient addPatient(@RequestBody Patient patient) {
 		Patient savedPatient =  patients.save(patient);
@@ -82,6 +84,7 @@ public class SymptomManagementService {
 		return savedPatient;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.PUT)
 	public @ResponseBody Patient updatePatient(
@@ -116,7 +119,7 @@ public class SymptomManagementService {
 		return savedPatient;
 	}
 
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.DELETE)
 	public @ResponseBody Patient deletePatient(
@@ -128,6 +131,7 @@ public class SymptomManagementService {
 		return found;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_SEARCH_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Patient> findByPatientLastName(
 			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String lastName) {
@@ -136,11 +140,13 @@ public class SymptomManagementService {
 
 	
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  PHYSICIAN APIS=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Physician> getPhysicianList() {
 		return physicians.findAll();
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.GET)
 	public @ResponseBody Physician getPhysician(
@@ -148,6 +154,7 @@ public class SymptomManagementService {
 		return physicians.findOne(id);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH, method = RequestMethod.POST)
 	public @ResponseBody Physician addPhysician(@RequestBody Physician physician) {
 		Physician savedPhysician = physicians.save(physician);
@@ -158,6 +165,7 @@ public class SymptomManagementService {
 		return savedPhysician;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.PUT)
 	public @ResponseBody Physician updatePhysician(
@@ -166,6 +174,7 @@ public class SymptomManagementService {
 		return physicians.save(physician);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.DELETE)
 	public @ResponseBody Physician deletePhysician(
@@ -177,12 +186,14 @@ public class SymptomManagementService {
 		return found;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_SEARCH_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Physician> findByPhysicianName(
 			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String lastName) {
 		return physicians.findByLastName(lastName);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PHYSICIAN_ALERT_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Alert> getPatientAlerts(
 			@PathVariable(SymptomManagementApi.ID_PARAMETER) String id) {
@@ -210,16 +221,19 @@ public class SymptomManagementService {
 		return foundAlerts;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.ALERT_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Alert> getAlertList() {
 		return alerts.findAll();
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.ALERT_PATH, method = RequestMethod.POST)
 	public @ResponseBody Alert addAlert(@RequestBody Alert alert) {
 		return alerts.save(alert);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.ALERT_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.DELETE)
 	public @ResponseBody Alert deleteNotification(
@@ -232,12 +246,15 @@ public class SymptomManagementService {
 	}
 	
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  MEDICATION APIS =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+	// No real need to secure these ?
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Medication> getMedicationList() {
 		return medications.findAll();
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.GET)
 	public @ResponseBody Medication getMedication(
@@ -245,12 +262,14 @@ public class SymptomManagementService {
 		return medications.findOne(id);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_PATH, method = RequestMethod.POST)
 	public @ResponseBody Medication addMedication(
 			@RequestBody Medication medication) {
 		return medications.save(medication);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.PUT)
 	public @ResponseBody Medication updateMedication(
@@ -260,12 +279,14 @@ public class SymptomManagementService {
 		return medications.save(medication);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_SEARCH_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<Medication> findByMedicationName(
 			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String name) {
 		return medications.findByName(name);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_PATIENT','ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.MEDICATION_PATH
 			+ SymptomManagementApi.ID_PATH, method = RequestMethod.DELETE)
 	public @ResponseBody Medication deleteMedication(
@@ -278,6 +299,7 @@ public class SymptomManagementService {
 	}
 	
 	// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+  CREDENTIAL APIS =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+	// can't secure these because its pre-login access
 	@RequestMapping(value = SymptomManagementApi.CREDENTIAL_SEARCH_PATH, method = RequestMethod.GET)
 	public @ResponseBody Collection<UserCredential> findByUserName(
 			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String username) {
