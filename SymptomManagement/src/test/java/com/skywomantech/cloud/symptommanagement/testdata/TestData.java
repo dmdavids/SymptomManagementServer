@@ -49,6 +49,9 @@ public class TestData {
 		return p;
 	}
 	
+	public static void resetRandomDate1() {
+		randomDate = System.currentTimeMillis();
+	}
 	
 	public static Physician randomPhysician(String first, String last) {
 		Physician p = new Physician();
@@ -163,5 +166,10 @@ public class TestData {
 	 */
 	public static String toJson(Object o) throws Exception{
 		return objectMapper.writeValueAsString(o);
+	}
+
+	public static void resetRandomDate() {
+		randomDate = System.currentTimeMillis();
+		
 	}
 }
