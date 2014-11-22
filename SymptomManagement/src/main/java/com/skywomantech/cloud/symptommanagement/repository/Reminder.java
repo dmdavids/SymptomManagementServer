@@ -79,7 +79,7 @@ public class Reminder {
 	}
 
 	public void setOn(boolean isOn) {
-		this.on = on;
+		this.on = isOn;
 	}
 
 	public ReminderType getReminderType() {
@@ -105,7 +105,6 @@ public class Reminder {
     public void setCreated(long created) {
         this.created = created;
     }
-
 
 
     @Override
@@ -144,7 +143,5 @@ public class Reminder {
                 ", reminderType=" + reminderType +
                 '}';
     }
-
-
 	
 }
