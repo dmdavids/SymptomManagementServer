@@ -12,6 +12,7 @@ public class StatusLog {
 	private String note;
 	private String image_location;
 	
+	
 	public StatusLog() {
 		super();
 	}

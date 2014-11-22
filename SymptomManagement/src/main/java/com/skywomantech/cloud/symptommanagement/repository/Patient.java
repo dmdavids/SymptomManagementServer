@@ -24,6 +24,7 @@ public class Patient {
 	private Set<PainLog> painLog;
 	private Set<MedicationLog> medLog;
 	private Set<StatusLog> statusLog;
+	private Set<CheckInLog> checkinLog;
 
 	public Patient() {
 		super();
@@ -181,6 +182,15 @@ public class Patient {
 	public void setPrefs(PatientPrefs prefs) {
 		this.prefs = prefs;
 	}
+	
+	public Set<CheckInLog> getCheckinLog() {
+		return checkinLog;
+	}
+
+	public void setCheckinLog(Set<CheckInLog> checkinLog) {
+		this.checkinLog = checkinLog;
+	}
+
 
 	@Override
 	public int hashCode() {

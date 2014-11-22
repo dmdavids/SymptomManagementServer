@@ -11,6 +11,7 @@ public class MedicationLog {
 	private long created;
 	private Medication med;
 	private long taken;
+	private long checkinId;
 
 	public MedicationLog() {
 		super();
@@ -60,6 +61,15 @@ public class MedicationLog {
 	public void setTaken(long taken) {
 		this.taken = taken;
 	}
+	
+	public long getCheckinId() {
+		return checkinId;
+	}
+
+	public void setCheckinId(long checkinId) {
+		this.checkinId = checkinId;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -101,7 +111,7 @@ public class MedicationLog {
 	@Override
 	public String toString() {
 		return "MedicationLog [id=" + id + ", created=" + created + ", med="
-				+ med + ", taken=" + taken + "]";
+				+ med + ", taken=" + taken + ", checkinId=" + checkinId + "]";
 	}
 
 }
