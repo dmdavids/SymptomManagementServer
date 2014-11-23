@@ -93,6 +93,7 @@ public class TestData {
 		MedicationLog log = new MedicationLog();
 		randomDate = getHoursFromNow(randomDate, -1);
 		log.setCreated(randomDate);
+		log.setTaken(randomDate);
 		log.setMed(med);
 		return log;
 	}
