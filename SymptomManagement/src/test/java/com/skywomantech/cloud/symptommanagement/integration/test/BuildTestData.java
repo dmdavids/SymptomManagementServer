@@ -66,6 +66,7 @@ public class BuildTestData {
 	private Medication oxycontin = TestData.randomMedication("OxyContin");
 	private Medication lortab = TestData.randomMedication("Lortab");
 	private Medication aspirin = TestData.randomMedication("Aspirin");
+	private Medication tylenol = TestData.randomMedication("Tylenol");
 
 	@Test
 	public void createDatabaseForTesting() throws Exception {
@@ -120,6 +121,7 @@ public class BuildTestData {
 			assertNotNull(lortab);
 
 			aspirin = smController.addMedication(aspirin);
+			tylenol = smController.addMedication(tylenol);
 
 			harryPotter = TestData.addPhysicianToPatient(maryPoppins, harryPotter);
 			harryPotter = TestData.addPhysicianToPatient(drWho, harryPotter);
@@ -139,11 +141,14 @@ public class BuildTestData {
 			harryPotter = TestData.addPrescriptionToPatient(oxycontin, harryPotter);
 			harryPotter = TestData.addPrescriptionToPatient(lortab, harryPotter);
 			hanSolo = TestData.addPrescriptionToPatient(oxycontin, hanSolo);
+			hanSolo = TestData.addPrescriptionToPatient(lortab, hanSolo);
 			bellaSwan = TestData.addPrescriptionToPatient(aspirin, bellaSwan);
 			martyMcFly = TestData.addPrescriptionToPatient(lortab, martyMcFly);
+			martyMcFly = TestData.addPrescriptionToPatient(oxycontin, martyMcFly);
 			mickeyMouse = TestData.addPrescriptionToPatient(lortab, mickeyMouse);
 			minnieMouse = TestData.addPrescriptionToPatient(lortab, minnieMouse);
 			donaldDuck = TestData.addPrescriptionToPatient(lortab, donaldDuck);
+			donaldDuck = TestData.addPrescriptionToPatient(tylenol, donaldDuck);
 			daiseyDuck = TestData.addPrescriptionToPatient(lortab, daiseyDuck);
 
 
