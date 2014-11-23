@@ -131,11 +131,31 @@ public class SymptomManagementService {
 		return found;
 	}
 
+//	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
+//	@RequestMapping(value = SymptomManagementApi.PATIENT_SEARCH_PATH, method = RequestMethod.GET)
+//	public @ResponseBody Collection<Patient> findByPatientLastName(
+//			@RequestParam(SymptomManagementApi.LAST_NAME_PARAMETER) String lastName) {
+//		return patients.findByLastName(lastName);
+//	}
+//	
 	@PreAuthorize("hasAnyRole('ROLE_PHYSICIAN', 'ROLE_ADMIN')")
 	@RequestMapping(value = SymptomManagementApi.PATIENT_SEARCH_PATH, method = RequestMethod.GET)
-	public @ResponseBody Collection<Patient> findByPatientLastName(
-			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String lastName) {
-		return patients.findByLastName(lastName);
+	public @ResponseBody Collection<Patient> findByPatientName(
+			@RequestParam(SymptomManagementApi.NAME_PARAMETER) String name) {
+		Collection<Patient> foundList = new HashSet<Patient>();
+		LOG.debug("Patient Name to Search " + name);
+		Collection<Patient> pList = patients.findAll();
+		if (pList != null) {
+			LOG.debug("All patients : " + Integer.toString(pList.size()));
+			for(Patient p: pList) {
+				if (p.getName().contentEquals(name)) {
+					LOG.debug("Patient Match is " + p.getName());
+					foundList.add(p);
+				}
+			}	
+		}
+		LOG.debug("Found patients : " + Integer.toString(foundList.size()));
+		return foundList;
 	}
 
 	
