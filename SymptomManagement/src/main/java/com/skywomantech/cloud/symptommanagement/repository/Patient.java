@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Patient {
 
 	@Id
-	private String id;
+	private String id;    // This is the medical record ID!!
+	
 	private String firstName;
 	private String lastName;
 	private String birthdate;
