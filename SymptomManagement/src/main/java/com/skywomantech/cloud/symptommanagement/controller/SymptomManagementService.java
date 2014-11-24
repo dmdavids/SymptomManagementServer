@@ -458,7 +458,7 @@ public class SymptomManagementService {
 
 		int deleted = deleteAlertsByPatientId(id); // clear old alerts if any
 		LOG.debug("Number of alerts deleted: " + Integer.toString(deleted));
-		int severityLevel = CheckForPatientSeverity(patient);
+		int severityLevel = checkForPatientSeverity(patient);
 		if (severityLevel > Alert.PAIN_SEVERITY_LEVEL_0 ) {
 			// let's make an alert for each doctor so that we can track who
 			// knows and who doesn't separately
@@ -496,7 +496,7 @@ public class SymptomManagementService {
 
 
 	// assumes pain logs have descending order for created dates
-	private int CheckForPatientSeverity(Patient patient) {
+	private int checkForPatientSeverity(Patient patient) {
 		
 		// Create values to check against...negative values are in past
 		long sixteenHoursAgo = getHoursFromNow(-16);
