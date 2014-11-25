@@ -4,7 +4,7 @@
  **
  ** 
  */
-package org.skywomantech.cloud.symptommanagement.auth;
+package com.skywomantech.cloud.symptommanagement.auth;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,6 +31,13 @@ public class ClientAndUserDetailsService implements UserDetailsService,
 	private final UserDetailsService mUsers;
 	
 	private final ClientDetailsUserDetailsService mClientDetailsWrapper;
+
+	public ClientAndUserDetailsService() {
+		super();
+		mUsers = null;
+		mClients = null;
+		mClientDetailsWrapper = null;
+	}
 
 	public ClientAndUserDetailsService(ClientDetailsService clients,
 			UserDetailsService users) {

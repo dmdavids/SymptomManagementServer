@@ -4,7 +4,7 @@
  **
  ** 
  */
-package org.skywomantech.cloud.symptommanagement.auth;
+package com.skywomantech.cloud.symptommanagement.auth;
 
 import java.util.Collection;
 import java.util.Collections;

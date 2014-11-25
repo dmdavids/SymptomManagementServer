@@ -1,4 +1,4 @@
-package org.skywomantech.cloud.symptommanagement.auth;
+package com.skywomantech.cloud.symptommanagement.auth;
 
 import java.io.File;
 import java.util.Arrays;
