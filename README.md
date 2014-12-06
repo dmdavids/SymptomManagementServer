@@ -1,14 +1,13 @@
 SMServer
 ========
-<p>
-<img border="0" alt="Symptom Management App Icon" src="https://github.com/dmdavids/SymptomManagementApp/images/red_border_white_pain_log.png" width="50" height="50">
-<br></p>
-<p>
+
 Coursera Mobile Cloud Computing with Android Capstone REST Spring Server project 2014
 
 This is the cloud server app for the matching Symptom Management App project.  Documentation for this project and for the app can be found in the App's repository.
 
 Symptom Management App at https://github.com/dmdavids/SymptomManagementApp
+
+Note: Database requires Mongo DB. Expected to run on local network from Eclipse workspace only.
 
 LICENSE
 
