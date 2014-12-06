@@ -7,7 +7,7 @@ This is the cloud server app for the matching Symptom Management App project.  D
 
 Symptom Management App at https://github.com/dmdavids/SymptomManagementApp
 
-Note: Database requires Mongo DB. Expected to run on local network from Eclipse workspace only.
+Note: Database requires Mongo DB. Expected to run on local network from Eclipse workspace only. This code and keystore are not meant to used in production environment.  This is a demo project only.
 
 LICENSE
 
