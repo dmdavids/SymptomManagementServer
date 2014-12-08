@@ -23,6 +23,8 @@ JUnit</p>
 <p>
 As much as I would haved liked to develop a full suite of test cases, unfortunately the amount of work on this project did not allow me enough time to do this in the given time frame. 
 </p>
+====================================================================================
+<strong>Below is a list of the APIs that were implemented for this project.</strong>
 
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=633
  style='width:474.95pt;border-collapse:collapse;border:none;mso-border-alt:
