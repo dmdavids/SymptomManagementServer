@@ -2,14 +2,15 @@ SMServer
 ========
 <p>
 Coursera Mobile Cloud Computing with Android Capstone REST Spring Server project 2014</p>
-
-<p>This is the cloud server app for the matching Symptom Management App project.  Detailed Documentation (pdf and video) for this project and for the app can be found in the App's repository at https://github.com/dmdavids/SymptomManagementApp</p>
-<p>   This is a demo project only. A "real" server would have significantly more security and other privacy requirements due to health regulations.  This server is implemented as a local server in the Eclipse environment.  This server implements Spring Security and OAuth2 but the certificates and keystore are not meant to used in production environment.  The database is Mongo DB (see http://docs.mongodb.org/manual/installation/).</p>
+<p>
+This is the cloud server for the Capstone project course in the Coursera Mobile Cloud Computing with Android (MoCCA) Specialization, which is the first Capstone course offered on the Coursera platform.  The Capstone started the week of Oct 5th, 2014 with the final submission due November 30th, 2014.</p>
+<p>The deliverables included this Java Spring Server along with an Android app.  The Android source for this project alnog with detailed documentation (pdf and video) for this project and for the app can be found in the App's repository at https://github.com/dmdavids/SymptomManagementApp</p>
+<p> <strong>This is a demo project only.</strong> A "real" server would have significantly more security and other privacy requirements due to health regulations.  This server is implemented as a local server in the Eclipse environment.  This server implements Spring Security and OAuth2 but the certificates and keystore are not meant to used in production environment.  The database is Mongo DB (see http://docs.mongodb.org/manual/installation/).</p>
 <p>
 The administrator user is currently hardcoded to admin/pass.  When the admin adds new patients or physicians (POST), credientials are auto-generated using the firstname.lastname and the password is initially "pass".  The app currently does not have functionality to change this but it would possible to do with changes to the API for credentials.
 </p>
 <p>
-Dependencies for the Server Project:</p>
+<strong>Dependencies for the Server Project:</strong></p>
 <p>
 Spring Boot</p>
 <p>
