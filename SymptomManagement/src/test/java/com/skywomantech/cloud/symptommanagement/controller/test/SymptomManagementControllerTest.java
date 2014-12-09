@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementService;
+import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementController;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.MedicationRepository;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
@@ -52,7 +52,7 @@ public class SymptomManagementControllerTest {
 	private MedicationRepository medicationRepository;
 	
 	@InjectMocks
-	private SymptomManagementService smController;
+	private SymptomManagementController smController;
 
 	private Patient p = TestData.randomPatient("Donald", "Duck", "12/11/1944");
 	private Physician dr = TestData.randomPhysician("Minnie", "Mouse");

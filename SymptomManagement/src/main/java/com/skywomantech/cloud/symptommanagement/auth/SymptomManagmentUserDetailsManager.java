@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementService;
+import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementController;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredential;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredential.UserRole;
 import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;

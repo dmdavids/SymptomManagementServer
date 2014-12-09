@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.skywomantech.cloud.symptommanagement.Application;
 import com.skywomantech.cloud.symptommanagement.client.SymptomManagementApi;
-import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementService;
+import com.skywomantech.cloud.symptommanagement.controller.SymptomManagementController;
 import com.skywomantech.cloud.symptommanagement.repository.Medication;
 import com.skywomantech.cloud.symptommanagement.repository.Patient;
 import com.skywomantech.cloud.symptommanagement.repository.Physician;
@@ -64,7 +64,7 @@ public class SymptomManagementIntegrationTest {
 	// Ask Spring to automatically construct and inject your VideoSvc
 	// into the test
 	@Autowired
-	private SymptomManagementService smController;
+	private SymptomManagementController smController;
 
 	// This is the mock interface to our application that we will use to 
 	// send mock HTTP requests

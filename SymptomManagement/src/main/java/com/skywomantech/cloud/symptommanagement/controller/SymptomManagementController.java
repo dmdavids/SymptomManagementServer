@@ -37,10 +37,10 @@ import com.skywomantech.cloud.symptommanagement.repository.UserCredential.UserRo
 import com.skywomantech.cloud.symptommanagement.repository.UserCredentialRepository;
 
 @Controller
-public class SymptomManagementService {
+public class SymptomManagementController {
 
 	static final Logger LOG = LoggerFactory
-			.getLogger(SymptomManagementService.class);
+			.getLogger(SymptomManagementController.class);
 
 	@Autowired
 	private PatientRepository patients;
