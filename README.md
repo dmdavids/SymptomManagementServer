@@ -36,7 +36,7 @@ to work with their healthcare providers to improve management of pain and qualit
 care.<br></p>
 ======================</p>
 <p>
-<strong>Final Feedback from Peer Review</strong> </p>
+<strong>Final Feedback from Peer Review (13 December 2014)</strong> </p>
 <p>
 Received 44/44 ==> 100% (Please view SymptomManagementApp for all reviews and comments for full project.)</p>
 https://github.com/dmdavids/SymptomManagementApp
