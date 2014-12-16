@@ -3,23 +3,30 @@ Symptom Management Server
 <p>
 Coursera Mobile Cloud Computing with Android Capstone REST Spring Server project 2014</p>
 <p>
-This is the cloud server for the Capstone project course in the Coursera Mobile Cloud Computing with Android (MoCCA) Specialization, which is the first Capstone course offered on the Coursera platform.  The Capstone started the week of Oct 5th, 2014 with the final submission due November 30th, 2014. Final evaluations were completed on 12-12-14.</p>
-<p>The deliverables included this Java Spring Server and a related Android app.  The Android source for this project along with detailed documentation (pdf and video) for this project and for the app can be found in the App's repository at</p>
-<p> https://github.com/dmdavids/SymptomManagementApp</p>
+This is the Java Spring Server for the Capstone project course in the Coursera Mobile Cloud Computing with Android (MoCCA) Specialization, which is the first Capstone course offered on the Coursera platform.  The Capstone started the week of Oct 5th, 2014 with the final submission due November 30th, 2014.</p>
+<p> Final peer review evaluation for this specific project was 100% or 44/44 points.</p>
+<p>The deliverables included this sever along with an Android App.  The app source, design document and evaluations for this project can be found at : </p>
+<p>https://github.com/dmdavids/SymptomManagementApp</p>
 <p>
 The Capstone MOOC gives Signature Track students who passed all previous MOOCs in the MoCCA Specialization “with Distinction” an opportunity to integrate and demonstrate the knowledge they acquired across the three earlier content area MOOCs. Participation in this Capstone course was by invitation only.
 </p>
 <p>https://www.coursera.org/specialization/mobilecloudcomputing/2?utm_medium=courseDescripLabel</p>
 <p>
-Course 1 Programming Mobile Applications for Android Handheld Systems</p>
+Course 1 Programming Mobile Applications for Android Handheld Systems (5200 met the "distinction" criteria.)</p>
 <p>
-Course 2 Pattern-Oriented Software Architectures: Programming Mobile Services for Android Handheld Systems</p>
+Course 2 Pattern-Oriented Software Architectures: Programming Mobile Services for Android Handheld Systems (3,600 users met the "distinction" criteria.)</p>
 <p>
 Course 3 Programming Cloud Services for Android Handheld Systems
-<br></p>
-======================
+</p>
+Note: Statistics related to the Symptom Management project.</p>
 <p>
-<strong>Project Description:</strong>
+364 students created a mid-term design for the Symptom Management project. </p>
+<p>
+57% of these submitted a final Symptom Management project or ~208 students. Compared to 63% and 75% for other projects.</p>
+<p>
+90 students or about 25% received 44/44 for the peer review evaluation grade.</p>
+==============================================================================
+<p><strong>Project Description:</strong>
 Over half of head and neck cancer patients will receive chemotherapy and radiation
 therapy for 6-7 weeks. During this time, symptoms can flare suddenly. The worst
 symptom for patients is radiation-induced oral pain and sore throat. Between the 2nd
@@ -40,8 +47,8 @@ care.<br></p>
 <p>
 Received 44/44 ==> 100% (Please view SymptomManagementApp for all reviews and comments for full project.)</p>
 https://github.com/dmdavids/SymptomManagementApp
-<p>
-======================</p>
+</p>
+======================
 <p> <strong>This is a demo server project only.</strong> An actual server would have significantly more security and other privacy requirements due to health regulations.  This server is implemented as a local server in the Eclipse environment.  This server implements Spring Security and OAuth2 but the certificates and keystore are not meant to used in production environment.  The database is Mongo DB (see http://docs.mongodb.org/manual/installation/).</p>
 <p>
 The administrator user is currently hardcoded to admin/pass.  When the admin adds new patients or physicians (POST), credientials are auto-generated using the firstname.lastname and the password is initially "pass".  The app currently does not have functionality to change this but it would possible to do with changes to the API for credentials.
