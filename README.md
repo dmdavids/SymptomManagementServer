@@ -1,5 +1,5 @@
-SMServer
-========
+Symptom Management Server
+=========================
 <p>
 Coursera Mobile Cloud Computing with Android Capstone REST Spring Server project 2014</p>
 <p>
