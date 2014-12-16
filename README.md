@@ -18,13 +18,13 @@ Course 2 Pattern-Oriented Software Architectures: Programming Mobile Services fo
 <p>
 Course 3 Programming Cloud Services for Android Handheld Systems
 </p>
-Note: Statistics related to the Symptom Management project.</p>
+<p><strong>Statistics related to the Symptom Management project.</strong></p>
 <p>
-364 students created a mid-term design for the Symptom Management project. </p>
+=> 364 students created a mid-term design for the Symptom Management project. </p>
 <p>
-57% of these submitted a final Symptom Management project or ~208 students. Compared to 63% and 75% for other projects.</p>
+=> 57% of these submitted a final Symptom Management project or ~208 students. Compared to 63% and 75% for other projects.</p>
 <p>
-90 students or about 25% received 44/44 for the peer review evaluation grade.</p>
+=> 90 students or about 25% received 44/44 for the peer review evaluation grade.</p>
 ==============================================================================
 <p><strong>Project Description:</strong>
 Over half of head and neck cancer patients will receive chemotherapy and radiation
@@ -41,7 +41,7 @@ symptoms sub-optimally managed for days.
 reliable method to assess symptoms in near real-time. It provides patients a simple way
 to work with their healthcare providers to improve management of pain and quality of
 care.<br></p>
-======================</p>
+======================
 <p>
 <strong>Final Feedback from Peer Review (13 December 2014)</strong> </p>
 <p>
