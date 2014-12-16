@@ -19,13 +19,10 @@ Course 2 Pattern-Oriented Software Architectures: Programming Mobile Services fo
 Course 3 Programming Cloud Services for Android Handheld Systems
 </p>
 <p><strong>Statistics related to the Symptom Management project.</strong></p>
-<p>
-=> 364 students created a mid-term design for the Symptom Management project. </p>
-<p>
-=> 57% of these submitted a final Symptom Management project or ~208 students. Compared to 63% and 75% for other projects.</p>
-<p>
-=> 90 students or about 25% received 44/44 for the peer review evaluation grade.</p>
-==============================================================================
+<p>364 students created a mid-term design for the Symptom Management project. </p>
+<p>57% of these submitted a final Symptom Management project or ~208 students. Compared to 63% and 75% for other projects.</p>
+<p>90 students or about 25% received 44/44 for the peer review evaluation grade.</p>
+========================
 <p><strong>Project Description:</strong>
 Over half of head and neck cancer patients will receive chemotherapy and radiation
 therapy for 6-7 weeks. During this time, symptoms can flare suddenly. The worst
@@ -40,14 +37,11 @@ symptoms sub-optimally managed for days.
 “Symptom Management” is a smartphone-based application which provides a more
 reliable method to assess symptoms in near real-time. It provides patients a simple way
 to work with their healthcare providers to improve management of pain and quality of
-care.<br></p>
+care.</p>
 ======================
-<p>
-<strong>Final Feedback from Peer Review (13 December 2014)</strong> </p>
-<p>
-Received 44/44 ==> 100% (Please view SymptomManagementApp for all reviews and comments for full project.)</p>
-https://github.com/dmdavids/SymptomManagementApp
-</p>
+<p><strong>Final Feedback from Peer Review (13 December 2014)</strong> </p>
+<p>This project received 44/44 ==> 100% (Please view SymptomManagementApp for peer evaluations with comments for this project.)</p>
+<p> https://github.com/dmdavids/SymptomManagementApp</p>
 ======================
 <p> <strong>This is a demo server project only.</strong> An actual server would have significantly more security and other privacy requirements due to health regulations.  This server is implemented as a local server in the Eclipse environment.  This server implements Spring Security and OAuth2 but the certificates and keystore are not meant to used in production environment.  The database is Mongo DB (see http://docs.mongodb.org/manual/installation/).</p>
 <p>
