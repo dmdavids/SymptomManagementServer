@@ -4,7 +4,7 @@ Symptom Management Server
 Coursera Mobile Cloud Computing with Android Capstone REST Spring Server project 2014</p>
 <p>
 This is the Java Spring Server for the Capstone project course in the Coursera Mobile Cloud Computing with Android (MoCCA) Specialization, which is the first Capstone course offered on the Coursera platform.  The Capstone started the week of Oct 5th, 2014 with the final submission due November 30th, 2014.</p>
-<p> Final peer review evaluation for this specific project was 100% or 44/44 points.</p>
+
 <p>The deliverables included this sever along with an Android App.  The app source, design document and evaluations for this project can be found at : </p>
 <p>https://github.com/dmdavids/SymptomManagementApp</p>
 <p>
@@ -18,10 +18,6 @@ Course 2 Pattern-Oriented Software Architectures: Programming Mobile Services fo
 <p>
 Course 3 Programming Cloud Services for Android Handheld Systems
 </p>
-<p><strong>Statistics related to the Symptom Management project.</strong></p>
-<p>364 students created a mid-term design for the Symptom Management project. </p>
-<p>57% of these submitted a final Symptom Management project or ~208 students. Compared to 63% and 75% for other projects.</p>
-<p>90 students or about 25% received 44/44 for the peer review evaluation grade.</p>
 ========================
 <p><strong>Project Description:</strong>
 Over half of head and neck cancer patients will receive chemotherapy and radiation
