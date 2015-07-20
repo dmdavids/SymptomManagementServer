@@ -34,11 +34,7 @@ symptoms sub-optimally managed for days.
 reliable method to assess symptoms in near real-time. It provides patients a simple way
 to work with their healthcare providers to improve management of pain and quality of
 care.</p>
-======================
-<p><strong>Final Feedback from Peer Review (13 December 2014)</strong> </p>
-<p>This project received 44/44 ==> 100% (Please view SymptomManagementApp for peer evaluations with comments for this project.)</p>
-<p> https://github.com/dmdavids/SymptomManagementApp</p>
-======================
+
 <p> <strong>This is a demo server project only.</strong> An actual server would have significantly more security and other privacy requirements due to health regulations.  This server is implemented as a local server in the Eclipse environment.  This server implements Spring Security and OAuth2 but the certificates and keystore are not meant to used in production environment.  The database is Mongo DB (see http://docs.mongodb.org/manual/installation/).</p>
 <p>
 The administrator user is currently hardcoded to admin/pass.  When the admin adds new patients or physicians (POST), credientials are auto-generated using the firstname.lastname and the password is initially "pass".  The app currently does not have functionality to change this but it would possible to do with changes to the API for credentials.
