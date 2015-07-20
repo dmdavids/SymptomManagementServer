@@ -8,7 +8,7 @@ This is the Java Spring Server for the Capstone project course in the Coursera M
 <p>The deliverables included this server along with an Android App.  The app source, design document and evaluations for this project can be found at : </p>
 <p>https://github.com/dmdavids/SymptomManagementApp</p>
 <p>
-The Capstone MOOC gives Signature Track students who passed all previous MOOCs in the MoCCA Specialization “with Distinction” an opportunity to integrate and demonstrate the knowledge they acquired across the three earlier content area MOOCs. Participation in this Capstone course was by invitation only.
+The Capstone MOOC gives Signature Track students who passed all previous MOOCs in the MoCCA Specialization “with Distinction” an opportunity to integrate and demonstrate the knowledge they acquired across the three earlier content area MOOCs.
 </p>
 <p>https://www.coursera.org/specialization/mobilecloudcomputing/2?utm_medium=courseDescripLabel</p>
 <p>
