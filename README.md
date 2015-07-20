@@ -5,7 +5,7 @@ Coursera Mobile Cloud Computing with Android Capstone REST Spring Server project
 <p>
 This is the Java Spring Server for the Capstone project course in the Coursera Mobile Cloud Computing with Android (MoCCA) Specialization, which is the first Capstone course offered on the Coursera platform.  The Capstone started the week of Oct 5th, 2014 with the final submission due November 30th, 2014.</p>
 
-<p>The deliverables included this sever along with an Android App.  The app source, design document and evaluations for this project can be found at : </p>
+<p>The deliverables included this server along with an Android App.  The app source, design document and evaluations for this project can be found at : </p>
 <p>https://github.com/dmdavids/SymptomManagementApp</p>
 <p>
 The Capstone MOOC gives Signature Track students who passed all previous MOOCs in the MoCCA Specialization “with Distinction” an opportunity to integrate and demonstrate the knowledge they acquired across the three earlier content area MOOCs. Participation in this Capstone course was by invitation only.
